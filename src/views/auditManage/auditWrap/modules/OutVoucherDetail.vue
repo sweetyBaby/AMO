@@ -174,19 +174,16 @@ export default {
             ...res.data.documentVoucher
           }
           this.$emit('handleType', res.data.documentVoucher.docType)
+          this.fileList = res.data.fileList.map(item => {
+            return {
+              uid: item.id,
+              name: item.fileName,
+              status: 'done',
+              url: item.fileUrl,
+              fileUrl: item.fileUrl
+            }
+          })
           this.loadingSpin = false
-          this.fileList = []
-          if (res.data.fileList && res.data.fileList.length) {
-            this.fileList = res.data.fileList.map(item => {
-              return {
-                uid: item.id,
-                name: item.fileName,
-                status: 'done',
-                url: item.fileUrl,
-                fileUrl: item.fileUrl
-              }
-            })
-          }
         } else {
           this.$notification['error']({
             message: '提示',

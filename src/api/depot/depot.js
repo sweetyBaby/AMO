@@ -19,11 +19,13 @@ const api = {
   saveList: 'inventoryMemory/save', // 无码新增
   productCount: 'inventory/productCount', // 无码新增
   exportDetail: 'inventory/exportDetail', // 导出
-  fetchWhInfo: 'dist/wh/fetchWhInfo' // 产品状态
+  fetchWhInfo: 'dist/wh/fetchWhInfo', // 产品状态
+  susseMsg: 'report/his/error/querySuccessByCondition' // 成功的信息
+
 }
 export default api
 
-export function allocationList (parameter) {
+export function allocationList(parameter) {
   return axios({
     url: api.allocationList,
     method: 'get'
@@ -31,14 +33,14 @@ export function allocationList (parameter) {
   })
 }
 
-export function SnapshotListDetails (parameter) {
+export function SnapshotListDetails(parameter) {
   return axios({
     url: api.SnapshotListDetails,
     method: 'post',
     data: parameter
   })
 }
-export function SnapshotList (parameter) {
+export function SnapshotList(parameter) {
   return axios({
     url: api.SnapshotList,
     method: 'post',
@@ -46,7 +48,7 @@ export function SnapshotList (parameter) {
   })
 }
 
-export function ReportingList (parameter) {
+export function ReportingList(parameter) {
   return axios({
     url: api.ReportingList,
     method: 'post',
@@ -54,7 +56,7 @@ export function ReportingList (parameter) {
   })
 }
 
-export function CheckList (parameter) {
+export function CheckList(parameter) {
   return axios({
     url: api.CheckList,
     method: 'post',
@@ -62,7 +64,7 @@ export function CheckList (parameter) {
   })
 }
 
-export function CheckDetailsList (parameter) {
+export function CheckDetailsList(parameter) {
   return axios({
     url: api.CheckDetailsList,
     method: 'post',
@@ -70,7 +72,7 @@ export function CheckDetailsList (parameter) {
   })
 }
 
-export function ErrorMsg (parameter) {
+export function ErrorMsg(parameter) {
   return axios({
     url: api.ErrorMsg,
     method: 'post',
@@ -78,7 +80,7 @@ export function ErrorMsg (parameter) {
   })
 }
 
-export function retriveNameData (parameter) {
+export function retriveNameData(parameter) {
   return axios({
     url: api.retriveNameData,
     method: 'post',
@@ -86,7 +88,7 @@ export function retriveNameData (parameter) {
   })
 }
 
-export function CodeSearch (parameter) {
+export function CodeSearch(parameter) {
   return axios({
     url: api.CodeSearch,
     method: 'post',
@@ -94,14 +96,14 @@ export function CodeSearch (parameter) {
   })
 }
 
-export function fetchTemplate (parameter) {
+export function fetchTemplate(parameter) {
   return axios({
     url: api.fetchTemplate + '?' + parameter,
     method: 'post'
   })
 }
 
-export function inventoryList (parameter) {
+export function inventoryList(parameter) {
   return axios({
     url: api.inventoryList,
     method: 'post',
@@ -109,7 +111,7 @@ export function inventoryList (parameter) {
   })
 }
 
-export function inoutReport (parameter) {
+export function inoutReport(parameter) {
   return axios({
     url: api.inoutReport,
     method: 'post',
@@ -117,14 +119,14 @@ export function inoutReport (parameter) {
   })
 }
 
-export function retriveList (parameter) {
+export function retriveList(parameter) {
   return axios({
     url: api.retriveList,
     method: 'post',
     data: parameter
   })
 }
-export function saveList (parameter) {
+export function saveList(parameter) {
   return axios({
     url: api.saveList,
     method: 'post',
@@ -132,7 +134,7 @@ export function saveList (parameter) {
   })
 }
 
-export function productCount (parameter) {
+export function productCount(parameter) {
   return axios({
     url: api.productCount,
     method: 'post',
@@ -140,7 +142,7 @@ export function productCount (parameter) {
   })
 }
 
-export function exportDetail (parameter) {
+export function exportDetail(parameter) {
   return axios({
     url: api.exportDetail,
     method: 'post',
@@ -149,7 +151,7 @@ export function exportDetail (parameter) {
   })
 }
 
-export function querySnapshotWithProType (parameter) {
+export function querySnapshotWithProType(parameter) {
   return axios({
     url: api.querySnapshotWithProType,
     method: 'post',
@@ -157,7 +159,7 @@ export function querySnapshotWithProType (parameter) {
   })
 }
 
-export function querySnapshotDailyDetailByCondition (parameter) {
+export function querySnapshotDailyDetailByCondition(parameter) {
   return axios({
     url: api.querySnapshotDailyDetailByCondition,
     method: 'post',
@@ -165,9 +167,19 @@ export function querySnapshotDailyDetailByCondition (parameter) {
   })
 }
 
-export function fetchWhInfo (parameter) {
+
+export function fetchWhInfo(parameter) {
   return axios({
     url: api.fetchWhInfo,
+    method: 'post',
+    data: parameter
+  })
+}
+
+
+export function susseMsg(parameter) {
+  return axios({
+    url: api.susseMsg,
     method: 'post',
     data: parameter
   })

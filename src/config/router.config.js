@@ -393,7 +393,25 @@ export const asyncRouterMap = [
                 name: 'InvoiceFile_Detail',
                 component: () => import('@/views/reservoir/Depot/modules/errorMsg'),
                 meta: { title: '发票文件错误详情', permission: ['InvoiceFile_Detail'] }
-              }
+              },
+              {
+                path: '/auditManage/auditWrap/RedReverse',
+                name: 'RedReverse',
+                component: () => import('@/views/auditManage/auditWrap/RedReverse'),
+                meta: {
+                  title: '红冲销量',
+                  permission: ['admin']
+                }
+              },
+              {
+                path: '/auditManage/auditWrap/RedReverse_Edit',
+                name: 'RedReverse_Edit',
+                component: () => import('@/views/auditManage/auditWrap/RedReverse_Edit'),
+                meta: {
+                  title: '新增红冲销量',
+                  permission: ['RedReverse_Edit']
+                }
+              },
             ]
           },
           {
@@ -406,7 +424,19 @@ export const asyncRouterMap = [
                 path: '/auditManage/estateAudit/PerfessionWrap',
                 name: 'PerfessionWrap',
                 component: () => import('@/views/auditManage/estateAudit/PerfessionWrap'),
-                meta: { title: '配送商发票', permission: ['admin'] }
+                meta: { title: '配送商发票第一段', permission: ['admin'] }
+              },
+              {
+                path: '/auditManage/estateAudit/PerfessionWrapSecond',
+                name: 'PerfessionWrapSecond',
+                component: () => import('@/views/auditManage/estateAudit/PerfessionWrapSecond'),
+                meta: { title: '配送商发票第二段', permission: ['admin'] }
+              },
+              {
+                path: '/auditManage/estateAudit/PerfessionSecond_Edit',
+                name: 'PerfessionSecond_Edit',
+                component: () => import('@/views/auditManage/estateAudit/PerfessionSecond_Edit'),
+                meta: { title: '配送商发票第二段新增', permission: ['admin'] }
               },
               {
                 path: '/auditManage/estateAudit/PerfessionWrap_Edit',
@@ -419,7 +449,25 @@ export const asyncRouterMap = [
                 name: 'PerfessionWrap_Detail',
                 component: () => import('@/views/auditManage/estateAudit/PerfessionWrap_Detail'),
                 meta: { title: '配送商发票详情', permission: ['PerfessionWrap_Detail'] }
-              }
+              },
+              {
+                path: '/auditManage/auditWrap/EstateRedReverse',
+                name: 'EstateRedReverse',
+                component: () => import('@/views/auditManage/auditWrap/EstateRedReverse'),
+                meta: {
+                  title: '配送商红冲销量',
+                  permission: ['admin']
+                }
+              },
+              {
+                path: '/auditManage/auditWrap/RedReverse_Edit',
+                name: 'EstateRedReverse_Edit',
+                component: () => import('@/views/auditManage/auditWrap/RedReverse_Edit'),
+                meta: {
+                  title: '新增配送商红冲销量',
+                  permission: ['EstateRedReverse_Edit']
+                }
+              },
             ]
           },
           {

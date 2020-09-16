@@ -96,8 +96,35 @@
             <a-col :span="6" class="leftcell">
               <span class="mustFill">*</span>配送商
             </a-col>
-            <a-col :span="18" class="rightcell borderRadiusRight">
+            <!-- <a-col :span="18" class="rightcell borderRadiusRight">
               <a-input placeholder="请输入配送商" :style="{ maxWidth:'255px',width:'100%' }" v-model="invoiceData.distribution" />
+            </a-col> -->
+            <a-col :span="18" class="rightcell">
+              <a-input-group compact :style="{margin:'12px 0'}">
+                <a-select style="width:90px" placeholder="已备案" v-model="invoiceData.authorize" @change="handleAuth">
+                  <a-select-option value="has">已备案</a-select-option>
+                  <a-select-option value="hasNo">未备案</a-select-option>
+                  <a-select-option value="unKnownDistribution">手动填写</a-select-option>
+                </a-select>
+                <a-select
+                  style="width: 180px;"
+                  showSearch
+                  placeholder="请选择配送商"
+                  optionFilterProp="children"
+                  v-model="invoiceData.cusCode"
+                  v-show="invoiceData.authorize === 'has'"
+                  @change="(value, option)=>{handleChangeAuthDist(value, option)}">
+                  <a-select-option v-for="item in cusList" :key="item.code" :value="item.code" :title="item.name">{{ item.name }}</a-select-option>
+                </a-select>
+                <a-input
+                  placeholder="请选择配送商"
+                  @click="handleSelectCus"
+                  style="width: 100%;max-width:180px;"
+                  v-model="invoiceData.cusName"
+                  v-show="invoiceData.authorize === 'hasNo'"
+                  aria-readonly="true"/>
+                <a-input v-show="invoiceData.authorize === 'unKnownDistribution'" placeholder="请输入配送商" :style="{ maxWidth:'165px',width:'100%' }" v-model="invoiceData.distribution" />
+              </a-input-group>
             </a-col>
           </a-row>
         </a-col>
@@ -225,6 +252,8 @@
         <img alt="example" style="width: 100%" :src="srcImg" />
       </a-modal>
       <select-cus-name v-if="selectShow" :visible="selectShow" :cusData="selectData(selectKey)" @selectCus="handleSelectOk" @selectCancle="handleSelectCancle"></select-cus-name>
+      <select-distributor v-if="addType !== null && selectShow" :visible="selectShow" :distCode="invoiceData.distCode" @selectCus="handleSelectOk" @selectCancle="handleSelectCancle"></select-distributor>
+
       <!-- </a-form> -->
     </div>
   </div>
@@ -241,7 +270,8 @@ import {
   EstateUpdate
 } from '@/api/auditManage/auditManage'
 import {
-  getDocumentCusList
+  getDocumentCusList,
+  getCusCodeByDistCode, // 查询已授权的配送商
 } from '@/api/depot/wareHouse'
 import moment from 'moment'
 import {
@@ -249,6 +279,7 @@ import {
   setStore
 } from '@/utils/storage'
 import SelectCusName from './SelectCusName'
+import SelectDistributor from '../../../reservoir/Depot/modules/SelectDistributor'
 
 export default {
   name: 'AuditAdd',
@@ -376,7 +407,12 @@ export default {
           code: editData.distCode,
           type: 1
         }
-        this.getBuyerData(params)
+        // this.getBuyerData(params) //TODO 授权配送商
+        if (this.addType !== null) {
+          this.getAuthDistributor({ distCode: editData.distCode })
+        } else {
+          this.getBuyerData(params)
+        }
         this.invoiceData = editData
         this.invoiceData.inDate = moment(editData.inDate).format('YYYY-MM-DD')
         this.invoiceData.date = undefined
@@ -420,6 +456,11 @@ export default {
     saleMonthChange(value, option, item) {
       item.invoiceType = option.data.attrs.configType
       item.voucherStatus = option.data.attrs.configType
+      this.$forceUpdate()
+    },
+    handleChangeAuthDist(value, option) {
+      const seleCus = this.invoiceData.cusCode
+      this.invoiceData.cusName = option.componentOptions.propsData.title
       this.$forceUpdate()
     },
     setFirst() {
@@ -485,13 +526,22 @@ export default {
       this.invoiceData.cusCode = undefined
       this.invoiceData.cusName = ''
     },
-    getCusList(params, checkedcus) {
-      getDocumentCusList(params).then(res => {
-        if (res.message === 'SUCCESS') {
-          console.info('res====', res)
-          this.cusList = res.data
-        }
-      })
+    getCusList(params) {
+      if (this.addType !== null) {
+        getCusCodeByDistCode(params).then((res) => {
+          if (res.message === 'SUCCESS') {
+            const data = res.data
+            data.map(item => { item.code = item.cusCode; item.name = item.cusName })
+            this.cusList = data
+          }
+        })
+      } else {
+        getDocumentCusList(params).then(res => {
+          if (res.message === 'SUCCESS') {
+            this.cusList = res.data
+          }
+        })
+      }
     },
     handleChangeCus(val) {
       this.cusList.forEach(item => {
@@ -550,8 +600,14 @@ export default {
         type: option.data.attrs.type
       }
       this.invoiceData.cusCode = undefined
-      this.invoiceData.distCode = value
-      this.getBuyerData(param)
+      this.invoiceData.distName = option.componentOptions.propsData.title
+      this.invoiceData.cusName = ''
+      this.$forceUpdate()
+      if (this.addType !== null) {
+        this.getAuthDistributor({ distCode: this.invoiceData.distCode })
+      } else {
+        this.getBuyerData(param)
+      }
     },
     getBuyerData(param) {
       // 获取购货方数据
@@ -559,6 +615,17 @@ export default {
         this.cusList = res.data
         this.$forceUpdate()
       })
+    },
+    getAuthDistributor(params) {
+      // 获取已授权配送商  {"distCode":"SVCT0107014"}
+      getCusCodeByDistCode(params).then((res) => {
+        if (res.message === 'SUCCESS') {
+          const data = res.data
+          data.map(item => { item.code = item.cusCode; item.name = item.cusName })
+          this.cusList = data
+        }
+      })
+      this.$forceUpdate()
     },
     viewImg() {
       // 查看图片
@@ -658,20 +725,22 @@ export default {
       }
       this.saveStatus = true
       this.invoiceData.inDate = moment(this.invoiceData.inDate).format('YYYY-MM-DD')
-      this.invoiceData.hosAuthFlag = this.invoiceData.authorize === 'hasNo' ? '2' : '1'
 
+      this.invoiceData.unKnownDistribution = this.invoiceData.authorize === 'unKnownDistribution' // 是否手动填写
+      this.invoiceData.hosAuthFlag = this.invoiceData.authorize === 'has' ? '1' : '2'
+      this.invoiceData.distributionCode = this.invoiceData.authorize === 'unKnownDistribution' ? '' : this.invoiceData.cusCode
       const currentData = this.invoiceData
+
       if (
         this.isEmpty(currentData.inType) ||
-                this.isEmpty(currentData.inCode) ||
-                this.isEmpty(currentData.inNo) ||
-                this.isEmpty(currentData.inDate) ||
-                this.isEmpty(currentData.distCode) ||
-                this.isEmpty(currentData.date) ||
-                this.addType === null && this.isEmpty(currentData.cusCode) ||
-                this.isEmpty(currentData.noneTaxTotal) ||
-                this.isEmpty(currentData.inStatus) ||
-                this.addType !== null && this.isEmpty(currentData.distribution)
+                  this.isEmpty(currentData.inCode) ||
+                  this.isEmpty(currentData.inNo) ||
+                  this.isEmpty(currentData.inDate) ||
+                  this.isEmpty(currentData.date) ||
+                  (this.addType === null && this.isEmpty(currentData.cusCode)) ||
+                  this.isEmpty(currentData.noneTaxTotal) ||
+                  this.isEmpty(currentData.inStatus) ||
+                  this.addType !== null && ((currentData.authorize === 'unKnownDistribution' && this.isEmpty(currentData.distribution)) || (currentData.authorize !== 'unKnownDistribution' && this.isEmpty(currentData.cusCode)))
       ) {
         this.$notification['error']({
           message: '提示',
@@ -681,6 +750,7 @@ export default {
         this.saveStatus = false
         return false
       }
+      currentData.distribution = currentData.authorize === 'unKnownDistribution' ? currentData.distribution : currentData.cusName
       if (currentData.inType === '04' || currentData.inType === '10') {
         if (this.isEmpty(currentData.verifyCode)) {
           this.$notification['error']({
@@ -761,7 +831,6 @@ export default {
                 duration: 4
               })
               setStore('AUDITEDIT', {})
-              // console.info('auditObj.invoice----', auditObj.invoice)
               setStore('EstateId', auditObj.invoice)
               this.$router.push({
                 name: 'AuditManage_Detail'

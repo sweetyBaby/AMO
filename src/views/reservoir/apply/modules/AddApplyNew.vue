@@ -453,24 +453,22 @@ export default {
       }
     },
     handleUdiSub (val) {
-      // console.info('val',newVal)
       if (val.length > 0) {
-        val.map(item => {
-          if (item !== '' && item.length > 48) {
-            this.$notification['error']({
-              message: '提示',
-              description: '呀，udi码超长啦！',
-              duration: 4
-            })
-          } else {
-            const params = {
-              distCode: this.proWrap.distCode,
-              udi: item
-            }
-            this.getScanIn(params)
-            this.uidMore = false
+        const index = val.findIndex(item => item && item.length > 48)
+        if (index === -1) {
+          const params = {
+            distCode: this.proWrap.distCode,
+            udiList: val
           }
-        })
+          this.getScanIn(params)
+          this.uidMore = false
+        } else {
+          this.$notification['error']({
+            message: '提示',
+            description: '呀，udi码超长啦！',
+            duration: 4
+          })
+        }
       } else {
         this.$notification['error']({
           message: '提示',

@@ -1081,45 +1081,43 @@ export default {
     handleUdiSub(val) {
       // console.info('val',newVal)
       if (val.length > 0) {
-        val.map(item => {
-          // console.info('item---',item)
-          if (item !== '' && item.length > 48) {
-            this.$notification['error']({
-              message: '提示',
-              description: '呀，udi码超长啦！',
-              duration: 4
-            })
-          } else {
-            const params = {
-              distCode: this.proWrap.distCode,
-              udi: item
-            }
-            scanOut(params).then(res => {
-              if (res.message === 'SUCCESS') {
-                if (res.data.whType !== 2 && res.data.whType !== 4 && res.data.whType !== 5) {
-                  const params = {
-                    type: 'scanOut',
-                    preList: res.data
-                  }
-                  this.scanContent(params)
-                } else {
-                  this.$notification['error']({
-                    message: '提示',
-                    description: '产品状态冻结中！',
-                    duration: 4
-                  })
+        const index = val.findIndex(item => item && item.length > 48)
+        if (index === -1) {
+          const params = {
+            distCode: this.proWrap.distCode,
+            udiList: val
+          }
+          scanOut(params).then(res => {
+            if (res.message === 'SUCCESS') {
+              if (res.data.whType !== 2 && res.data.whType !== 4 && res.data.whType !== 5) {
+                const params = {
+                  type: 'scanOut',
+                  preList: res.data
                 }
+                this.scanContent(params)
               } else {
                 this.$notification['error']({
                   message: '提示',
-                  description: '添加未成功！',
+                  description: '产品状态冻结中！',
                   duration: 4
                 })
               }
-            })
-            this.uidMore = false
-          }
-        })
+            } else {
+              this.$notification['error']({
+                message: '提示',
+                description: '添加未成功！',
+                duration: 4
+              })
+            }
+          })
+          this.uidMore = false
+        } else {
+          this.$notification['error']({
+            message: '提示',
+            description: '呀，udi码超长啦！',
+            duration: 4
+          })
+        }
       } else {
         this.$notification['error']({
           message: '提示',

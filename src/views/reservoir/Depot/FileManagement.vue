@@ -1,5 +1,6 @@
 <template>
-  <a-card :bordered="false" v-if="!errorShow">
+<div>
+  <a-card :bordered="false" >
     <a-spin tip="正在上传中，请耐心等待..." class="uploading" v-show="uploading">
       <a-progress :percent="percent" class="progress" />
     </a-spin>
@@ -51,7 +52,7 @@
             </div>
             <div class="searchList" style="width: 100%;">
               <label for>文件编号</label>
-              <a-input-number style="width: 100%;" v-model="queryParam.fileId" placeholder="请输入文件编号" />
+              <a-input-number  style="width: 100%;" v-model="queryParam.fileId" placeholder="请输入文件编号" />
             </div>
             <div class="searchList" style="width: 100%;">
               <label for>上报时间</label>
@@ -117,13 +118,22 @@
           <span v-else>{{ text }}</span>
         </span>
         <span slot="status" slot-scope="text, record">
-          <span v-if="text === 'success'">处理成功</span>
+         
+          
+          <span v-if="text === 'success'">
+            
+            <a @click="errorTip(record)">处理成功</a>
+            </span>
+            
+       
           <span v-else-if="text === 'on'">处理中</span>
+        
           <a-tooltip
             placement="top"
             title="点击查看错误信息"
             v-else
             v-model="record.isError"
+
           >
             <a @click="errorTip(record)">处理失败</a>
           </a-tooltip>
@@ -131,9 +141,11 @@
       </s-table>
     </div>
   </a-card>
-  <a-card :bordered="false" v-else>
+
+  <!-- <a-card :bordered="false" v-if-else>
     <ErrorMsg :errorData="errorData" @errorBack="errorBack"></ErrorMsg>
-  </a-card>
+  </a-card> -->
+  </div>
 </template>
 
 <script>
@@ -142,7 +154,7 @@ import { userDistRange } from '@/api/depot/wareHouse'
 import ErrorMsg from './modules/errorMsg'
 import AgentTable from './modules/agentTable'
 import { STable } from '@/components'
-import { DataFilter } from '@/utils/storage'
+import { DataFilter, setStore } from '@/utils/storage'
 import { ReportingList, retriveNameData, fetchTemplate } from '@/api/depot/depot'
 import { retriveFile } from '@/api/information'
 import moment from 'moment'
@@ -226,8 +238,9 @@ export default {
             // console.info ('record====', text)
             if (record.isDistribution === 1) {
               return '配送商' + text
+            } else {
+               return text
             }
-            return text
           }
         },
         {
@@ -258,6 +271,16 @@ export default {
         id: '',
         fileName: ''
       },
+
+      trueData: {
+        id: '',
+        fileName: ''
+      },
+
+
+
+
+
       selectData: [
         { value: '', text: '全部' },
         { value: 'on', text: '处理中' },
@@ -347,22 +370,35 @@ export default {
       this.errorShow = false
       this.queryParam = params
     },
+
+    trueBack (params) {
+      // console.info('params---',params)
+      this.errorShow = fslse
+      this.queryParam = params
+    },
+
+
+
     errorTip (record) {
-      // console.info('record====',record.id)
+       console.info('record====',record)
       // 错误信息详情
       const params = {
-        pageTitle: '错误详情',
+        pageTitle: '详情',
         id: record.id,
         parentCom: 'FileManagement',
         fileName: record.fileName,
+        newStatus: record.status,
         ...this.queryParam
       }
+      setStore('ERRORDETAIL', params)
       this.$router.push({
         name: 'FileManagement_Detail',
         params: params
       })
       record.isError = false
     },
+   
+   
     resetCondition () {
       // 重置查询条件
       this.queryParam.timeFilter = null

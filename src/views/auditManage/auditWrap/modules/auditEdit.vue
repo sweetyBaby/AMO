@@ -69,6 +69,7 @@ export default {
     getFirstLogin() {
       const invoiceInfo = getStore('EstateId')
       const invoiceEdit = getStore('AUDITEDIT')
+      console.log('0916 invoiceInfo=', invoiceInfo)
       if (invoiceEdit && invoiceEdit.isEdit) {
         this.detailData = invoiceEdit
         this.isAdd = true

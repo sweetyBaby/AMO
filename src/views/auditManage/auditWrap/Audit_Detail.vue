@@ -251,14 +251,12 @@ export default {
           dataIndex: 'docNo',
           key: 'docNo',
           width: 120,
-        },
-        // {
-        //   title: '单价（不含税）',
-        //   dataIndex: 'nonePrice',
-        //   key: 'nonePrice',
-        //   width: 120,
-        // },
-        {
+        }, {
+          title: '单价（不含税）',
+          dataIndex: 'nonePrice',
+          key: 'nonePrice',
+          width: 120,
+        }, {
           title: '数量',
           dataIndex: 'qty',
           key: 'qty',
@@ -271,14 +269,12 @@ export default {
           dataIndex: 'uom',
           key: 'uom',
           width: 100,
-        },
-        // {
-        //   title: '总价（不含税）',
-        //   dataIndex: 'nonePriceTotal',
-        //   key: 'nonePriceTotal',
-        //   width: 120,
-        // }
-      ],
+        }, {
+          title: '总价（不含税）',
+          dataIndex: 'nonePriceTotal',
+          key: 'nonePriceTotal',
+          width: 120,
+        }],
       proColumn: [
         {
           title: '产品型号',
@@ -295,14 +291,12 @@ export default {
           dataIndex: 'docNo',
           key: 'docNo',
           width: 120,
-        },
-        // {
-        //   title: '单价（不含税）',
-        //   dataIndex: 'price',
-        //   key: 'price',
-        //   width: 120,
-        // },
-        {
+        }, {
+          title: '单价（不含税）',
+          dataIndex: 'price',
+          key: 'price',
+          width: 120,
+        }, {
           title: '数量',
           dataIndex: 'qty',
           key: 'qty',
@@ -310,20 +304,17 @@ export default {
           customRender: (text) => {
             return text ? parseInt(text) : null
           }
-        },
-        {
+        }, {
           title: '单位',
           dataIndex: 'uom',
           key: 'uom',
           width: 100,
-        },
-        // {
-        //   title: '总价（不含税）',
-        //   dataIndex: 'amount',
-        //   key: 'amount',
-        //   width: 120,
-        // }
-      ],
+        }, {
+          title: '总价（不含税）',
+          dataIndex: 'amount',
+          key: 'amount',
+          width: 120,
+        }],
       queryParam: {
         page: 1,
         size: 10,

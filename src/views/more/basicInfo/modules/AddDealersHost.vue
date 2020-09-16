@@ -23,7 +23,7 @@
                 <i class="iconfont icon-save"></i>
               </a-tooltip>
             </span>
-            <!-- <span class="titleBtn">
+          <!-- <span class="titleBtn">
                         <a-tooltip placement="top">
                             <template slot="title">
                                 <span>取消</span>
@@ -46,7 +46,7 @@
               </div>
               <div class="adInput-input" @click="retriveCode('distCode')">
                 <a-form-item style="width: 100%" has-feedback>
-                  <a-input readonly v-decorator="['distName', { rules: [{ required: true, message: '请输入经销商名称！', whitespace: true }]}]" placeholder="请输入经销商名称" style="width: 100%">
+                  <a-input readOnly v-decorator="['distName', { rules: [{ required: true, message: '请输入经销商名称！', whitespace: true }]}]" placeholder="请输入经销商名称" style="width: 100%">
                     <a-icon slot="suffix" type="ellipsis" />
                   </a-input>
                 </a-form-item>
@@ -85,7 +85,7 @@
               </div>
               <div class="adInput-input">
                 <a-form-item style="width: 100%" has-feedback>
-                  <a-input readonly v-decorator="['hosName', { rules: [{ required: true, message: '输入医院名称', whitespace: true }]}]" placeholder="输入医院名称" style="width: 100%">
+                  <a-input readOnly v-decorator="['hosName', { rules: [{ required: true, message: '输入医院名称', whitespace: true }]}]" placeholder="输入医院名称" style="width: 100%">
                     <a-icon slot="suffix" type="ellipsis" />
                   </a-input>
                 </a-form-item>
@@ -303,7 +303,6 @@ export default {
           .indexOf(input.toLowerCase()) >= 0
       )
     },
-
     // 分页
     handleTableChange(pagination) {
       this.pagination.current = pagination.current
@@ -378,7 +377,6 @@ export default {
     handleChange(value) {
       console.log(`selected ${value}`)
     },
-
     retriveCode(code) {
       this.disCodevisible = true
       if (code === 'distCode') {
@@ -450,264 +448,264 @@ export default {
 /* //新增页面边框 */
 
 .proNewBorder {
+  width: 100%;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 5px 20px rgba(172, 173, 183, 0.2);
+  opacity: 1;
+  border-radius: 4px;
+  padding: 30px 40px;
+  margin-top: 20px;
+
+  .proNew-title {
+    color: rgba(84, 97, 130, 1);
+    font-size: 14px;
+    height: 36px;
     width: 100%;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 5px 20px rgba(172, 173, 183, 0.2);
-    opacity: 1;
-    border-radius: 4px;
-    padding: 30px 40px;
-    margin-top: 20px;
+    display: inline-block;
 
-    .proNew-title {
-        color: rgba(84, 97, 130, 1);
-        font-size: 14px;
-        height: 36px;
-        width: 100%;
-        display: inline-block;
-
-        .iconfont {
-            color: rgba(66, 131, 255, 1);
-            font-size: 26px;
-        }
-
-        span {
-            float: left;
-            line-height: 36px;
-            font-size: 16px;
-        }
+    .iconfont {
+      color: rgba(66, 131, 255, 1);
+      font-size: 26px;
     }
 
-    /* 不可修改时的样式 */
-    .ban_update {
-        .addInput-title {
-            .ban_small {
-                float: right;
-                color: rgba(62, 77, 168, 1) !important;
-                opacity: 1;
-            }
-        }
-
-        .adInput-input {
-            .ant-input {
-                background: rgba(236, 236, 236, 1) !important;
-                color: rgba(193, 193, 193, 1) !important;
-                opacity: 1 !important;
-            }
-        }
-
-        .area-select {
-            background: #ececec !important;
-            color: #c1c1c1 !important;
-        }
+    span {
+      float: left;
+      line-height: 36px;
+      font-size: 16px;
     }
+  }
 
-    .addInput {
-        margin-bottom: 30px;
-
-        .addInput-title {
-            padding: 0 0 8px 0;
-            font-size: 14px;
-
-            span {
-                color: rgba(84, 97, 130, 1);
-            }
-
-            small {
-                color: #e17877;
-                margin-right: 5px;
-                float: left;
-
-                &.addInput-tips {
-                    color: rgba(170, 174, 185, 1);
-                }
-            }
-        }
+  /* 不可修改时的样式 */
+  .ban_update {
+    .addInput-title {
+      .ban_small {
+        float: right;
+        color: rgba(62, 77, 168, 1) !important;
+        opacity: 1;
+      }
     }
 
     .adInput-input {
-        .ant-calendar-picker {
-            max-width: 100% !important;
-        }
-
-        .begin_date {
-            .anticon-calendar {
-                color: #3e4da8;
-            }
-        }
-
-        .ant-select-selection--single {
-            height: 42px;
-        }
-
-        .ant-select-selection__rendered {
-            line-height: 42px;
-        }
-
-        .ant-form-item,
-        .ant-form-item-control-wrapper,
-        .ant-form-item-control {
-            width: 100%;
-            margin-right: 0px;
-        }
-
-        .ant-select-selection {
-            background: rgba(252, 252, 252, 1) !important;
-            border: 1px solid #ececec !important;
-        }
-
-        .ant-input {
-            width: 100%;
-            height: 44px;
-            background: rgba(252, 252, 252, 1);
-            border: 1px solid rgba(236, 236, 236, 1);
-            opacity: 1;
-            border-radius: 4px;
-        }
-
-        .ant-input-affix-wrapper {
-            border: 0;
-        }
-
-        .ant-input-affix-wrapper .ant-input-suffix {
-            cursor: pointer;
-            right: 26px;
-
-            .icon-cancle {
-                color: rgba(205, 223, 252, 1);
-                font-size: 24px;
-            }
-        }
+      .ant-input {
+        background: rgba(236, 236, 236, 1) !important;
+        color: rgba(193, 193, 193, 1) !important;
+        opacity: 1 !important;
+      }
     }
 
-    /* 城市2级联动样式 */
-    .area-select-wrap {
-        display: flex;
-        flex-wrap: nowrap;
+    .area-select {
+      background: #ececec !important;
+      color: #c1c1c1 !important;
+    }
+  }
 
-        .area-select {
-            background: #fcfcfc;
-            border: 1px solid #ececec;
-            color: rgba(159, 172, 195, 1);
-            height: 42px;
-            width: 50%;
-            line-height: 42px;
-            display: inline-block;
-            position: relative;
+  .addInput {
+    margin-bottom: 30px;
 
-            .area-select-icon {
-                font-family: "iconfont";
-                font-style: normal;
-                position: absolute;
-                right: 16px;
-                top: 0;
+    .addInput-title {
+      padding: 0 0 8px 0;
+      font-size: 14px;
 
-                &:before {
-                    content: "\e64b";
-                }
-            }
+      span {
+        color: rgba(84, 97, 130, 1);
+      }
 
-            &:first-child {
-                margin-left: 0;
-            }
+      small {
+        color: #e17877;
+        margin-right: 5px;
+        float: left;
 
-            .area-selected-trigger {
-                width: 100%;
-                padding: 0 12px;
-                display: inline-block;
-            }
-
-            .area-selectable-list-wrap {
-                position: absolute;
-                margin: -15px 0 0 0;
-                width: 100%;
-            }
-
-            .area-selectable-list {
-                border: 1px solid #ececec;
-                width: 100%;
-                margin: 12px 0 0 0;
-                padding: 0;
-                list-style: none;
-                z-index: 9999;
-                position: absolute;
-                background: #fcfcfc;
-                max-height: 130px;
-                overflow-y: auto;
-
-                li {
-                    padding: 0 12px;
-                    cursor: pointer;
-                    line-height: 32px;
-                }
-            }
+        &.addInput-tips {
+          color: rgba(170, 174, 185, 1);
         }
+      }
+    }
+  }
+
+  .adInput-input {
+    .ant-calendar-picker {
+      max-width: 100% !important;
     }
 
-    /* 上传图片 */
-    .clearfix {
-        .ant-upload-select-picture-card i {
-            font-size: 32px;
-            color: #999;
-        }
-
-        .ant-upload-select-picture-card {
-            .ant-upload-text {
-                margin-top: 8px;
-                color: #666;
-            }
-        }
-
-        .ant-upload-select-picture-card {
-            width: 119px;
-            height: 119px;
-
-            .ant-upload-text {
-                margin-top: 0px;
-                color: #b6b3b3;
-            }
-        }
-
-        .ant-upload-list-picture-card {
-
-            /* width: 100%; */
-            .ant-upload-list-item-error {
-                border: 0;
-            }
-
-            .ant-upload-list-item {
-                margin-right: 10px;
-                margin-bottom: 10px;
-                background: rgba(252, 252, 252, 1);
-                border: 1px solid rgba(236, 236, 236, 1);
-                opacity: 1;
-                border-radius: 4px;
-            }
-
-            .ant-upload-list-item {
-                width: 119px;
-                height: 119px;
-
-                padding: 0;
-            }
-        }
+    .begin_date {
+      .anticon-calendar {
+        color: #3e4da8;
+      }
     }
+
+    .ant-select-selection--single {
+      height: 42px;
+    }
+
+    .ant-select-selection__rendered {
+      line-height: 42px;
+    }
+
+    .ant-form-item,
+    .ant-form-item-control-wrapper,
+    .ant-form-item-control {
+      width: 100%;
+      margin-right: 0px;
+    }
+
+    .ant-select-selection {
+      background: rgba(252, 252, 252, 1) !important;
+      border: 1px solid #ececec !important;
+    }
+
+    .ant-input {
+      width: 100%;
+      height: 44px;
+      background: rgba(252, 252, 252, 1);
+      border: 1px solid rgba(236, 236, 236, 1);
+      opacity: 1;
+      border-radius: 4px;
+    }
+
+    .ant-input-affix-wrapper {
+      border: 0;
+    }
+
+    .ant-input-affix-wrapper .ant-input-suffix {
+      cursor: pointer;
+      right: 26px;
+
+      .icon-cancle {
+        color: rgba(205, 223, 252, 1);
+        font-size: 24px;
+      }
+    }
+  }
+
+  /* 城市2级联动样式 */
+  .area-select-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+
+    .area-select {
+      background: #fcfcfc;
+      border: 1px solid #ececec;
+      color: rgba(159, 172, 195, 1);
+      height: 42px;
+      width: 50%;
+      line-height: 42px;
+      display: inline-block;
+      position: relative;
+
+      .area-select-icon {
+        font-family: "iconfont";
+        font-style: normal;
+        position: absolute;
+        right: 16px;
+        top: 0;
+
+        &:before {
+          content: "\e64b";
+        }
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      .area-selected-trigger {
+        width: 100%;
+        padding: 0 12px;
+        display: inline-block;
+      }
+
+      .area-selectable-list-wrap {
+        position: absolute;
+        margin: -15px 0 0 0;
+        width: 100%;
+      }
+
+      .area-selectable-list {
+        border: 1px solid #ececec;
+        width: 100%;
+        margin: 12px 0 0 0;
+        padding: 0;
+        list-style: none;
+        z-index: 9999;
+        position: absolute;
+        background: #fcfcfc;
+        max-height: 130px;
+        overflow-y: auto;
+
+        li {
+          padding: 0 12px;
+          cursor: pointer;
+          line-height: 32px;
+        }
+      }
+    }
+  }
+
+  /* 上传图片 */
+  .clearfix {
+    .ant-upload-select-picture-card i {
+      font-size: 32px;
+      color: #999;
+    }
+
+    .ant-upload-select-picture-card {
+      .ant-upload-text {
+        margin-top: 8px;
+        color: #666;
+      }
+    }
+
+    .ant-upload-select-picture-card {
+      width: 119px;
+      height: 119px;
+
+      .ant-upload-text {
+        margin-top: 0px;
+        color: #b6b3b3;
+      }
+    }
+
+    .ant-upload-list-picture-card {
+
+      /* width: 100%; */
+      .ant-upload-list-item-error {
+        border: 0;
+      }
+
+      .ant-upload-list-item {
+        margin-right: 10px;
+        margin-bottom: 10px;
+        background: rgba(252, 252, 252, 1);
+        border: 1px solid rgba(236, 236, 236, 1);
+        opacity: 1;
+        border-radius: 4px;
+      }
+
+      .ant-upload-list-item {
+        width: 119px;
+        height: 119px;
+
+        padding: 0;
+      }
+    }
+  }
 }
 
 //弹框中的搜索框
 .codeSearch {
-    .ant-modal-content {
-        .ant-input-affix-wrapper {
-            margin-bottom: 20px;
-            width: 328px;
-            height: 32px;
-        }
-
-        .ant-input-suffix {
-            .ant-btn {
-                background-color: #e9e9e9;
-                border-color: #e9e9e9;
-            }
-        }
+  .ant-modal-content {
+    .ant-input-affix-wrapper {
+      margin-bottom: 20px;
+      width: 328px;
+      height: 32px;
     }
+
+    .ant-input-suffix {
+      .ant-btn {
+        background-color: #e9e9e9;
+        border-color: #e9e9e9;
+      }
+    }
+  }
 }
 </style>

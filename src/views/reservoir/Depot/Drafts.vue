@@ -353,13 +353,13 @@ export default {
             pageTitle: '编辑产品调拨'
           }
           break
-        case '21':
-          pathTo = 'Stained_Edit'
-          params = {
-            proType: 'proAllot',
-            pageTitle: '编辑污损调拨'
-          }
-          break
+        // case '21':
+        //   pathTo = 'Stained_Edit'
+        //   params = {
+        //     proType: 'proAllot',
+        //     pageTitle: '编辑污损调拨'
+        //   }
+        //   break
         default:
           break
       }

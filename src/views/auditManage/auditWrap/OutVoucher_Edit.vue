@@ -222,19 +222,19 @@ const columns = [
     width: '160px',
     scopedSlots: { customRender: 'qty' }
   },
-//   {
-//     title: '单价（不含税）',
-//     key: 'nonePrice',
-//     dataIndex: 'nonePrice',
-//     width: '160px',
-//     scopedSlots: { customRender: 'nonePrice' }
-//   },
-//   {
-//     title: '总价（不含税）',
-//     key: 'nonePriceTotal',
-//     dataIndex: 'nonePriceTotal',
-//     scopedSlots: { customRender: 'nonePriceTotal' }
-//   }
+  {
+    title: '单价（不含税）',
+    key: 'nonePrice',
+    dataIndex: 'nonePrice',
+    width: '160px',
+    scopedSlots: { customRender: 'nonePrice' }
+  },
+  {
+    title: '总价（不含税）',
+    key: 'nonePriceTotal',
+    dataIndex: 'nonePriceTotal',
+    scopedSlots: { customRender: 'nonePriceTotal' }
+  }
 ]
 export default {
   name: 'VoucherDetails',
@@ -324,18 +324,21 @@ export default {
         ...this.titleData,
         ...newData
       }
-
+      this.titleData.inStatus = '蓝票'
       if (newData.id) {
         this.isEdit = false
         this.titleData.id = newData.id
         this.detailsData()
         this.isEdit = false
-        if (newData.status === '3') { // 关账
-          this.columns = this.columns.filter(item => item.title !== '操作')
+        if (newData.status === '3') {
+          // console.info(this.columns.length)
+          if (this.columns.length === 7) {
+            this.columns = this.columns.slice(0, 6)
+          }
           this.isClosed = true
         } else {
-          const index = this.columns.findIndex(item => item.title === '操作')
-          if (index === -1) {
+          // console.info(this.columns.length)
+          if (this.columns.length === 6) {
             this.columns.push({
               title: '操作',
               dataIndex: 'actions',

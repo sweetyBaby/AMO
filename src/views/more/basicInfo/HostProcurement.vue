@@ -3,7 +3,7 @@
     <div class="pageTitle">
       <a-row :gutter="48">
         <a-col :md="16" :sm="24">
-          <h3>医院采购代理机构</h3>
+          <h3>配送商业务授权医院</h3>
         </a-col>
         <a-col :md="8" :sm="24">
           <div class="icons-list pageTitle-Btn">

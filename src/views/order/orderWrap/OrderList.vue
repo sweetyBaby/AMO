@@ -124,6 +124,7 @@
                       <i class="iconfont icon-table-edit"/>
                       取消订单
                     </a>
+                    <!-- <a @click="handleConfirm(record)" v-if="(record.status ==='3' || record.status ==='4') && record.confirm !== '1'"> -->
                     <a @click="handleConfirm(record)" v-if="record.status !=='99' && record.confirm !== '1'">
                       <i class="iconfont icon-save"/>
                       确认收货
@@ -433,16 +434,25 @@ export default {
     },
     handleConfirmSub (record) {
       // console.info('record===', record)
-      OrderConfirm({ id: record.id }).then(res => {
-        if (res.message === 'SUCCESS') {
-          this.$refs.table.refresh(true)
-        } else {
-          this.$notification['error']({
-            message: '提示',
-            description: res.message || '确认收货失败！',
-            duration: 4
-          })
-        }
+    //   OrderConfirm({ id: record.id }).then(res => {
+    //     if (res.message === 'SUCCESS') {
+    //       this.$refs.table.refresh(true)
+    //     } else {
+    //       this.$notification['error']({
+    //         message: '提示',
+    //         description: res.message || '确认收货失败！',
+    //         duration: 4
+    //       })
+    //     }
+    //   })
+      const data = {
+        ...record,
+        isFromOrderList: true
+      }
+      console.log('0914 data=', data)
+      this.$router.push({
+        name: 'WareHouse',
+        params: data
       })
     },
     handlePicker (date) {

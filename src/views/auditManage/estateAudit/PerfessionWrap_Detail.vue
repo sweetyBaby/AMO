@@ -1,12 +1,13 @@
 <template>
   <div class="pageTitle">
     <a-tabs v-model="activeKey" type="card" @change="handleChange">
-      <a-tab-pane tab="发票" key="estateAudit" :closable="false">
+      <audit-edit />
+      <!-- <a-tab-pane tab="发票" key="estateAudit" :closable="false">
         <audit-edit />
-      </a-tab-pane>
-      <a-tab-pane tab="附件管理" key="estateEnclosure" :closable="false">
+      </a-tab-pane> -->
+      <!-- <a-tab-pane tab="附件管理" key="estateEnclosure" :closable="false">
         <enclosure :isAuditShow="isShoweclosure" v-if="isShoweclosure" />
-      </a-tab-pane>
+      </a-tab-pane> -->
     </a-tabs>
   </div>
 </template>

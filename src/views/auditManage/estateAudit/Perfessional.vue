@@ -502,7 +502,12 @@ export default {
               return moment(text).format('YYYY-MM-DD HH:mm')
             }
           }
-        }
+        }, {
+          title: '操作人',
+          dataIndex: 'operater',
+          key: 'operater',
+          width: '80px'
+        },
       ],
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {

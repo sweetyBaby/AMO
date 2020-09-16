@@ -18,8 +18,8 @@
           <p>添加无码产品</p>
         </div>
       </div>
-      <div class="scanBor" v-if="isWareIn && !isBack && !proAllot"></div>
-      <div class="scanList" @click="handlePreClick" v-if="isWareIn && !isBack && !proAllot">
+      <div class="scanBor" v-if="isWareIn && !isBack && !proAllot&& !isVirtualFlag"></div>
+      <div class="scanList" @click="handlePreClick" v-if="isWareIn && !isBack && !proAllot && !isVirtualFlag">
         <span class="scanIcon"><i class="iconfont icon-preStorage" /></span>
         <div class="scanMain">
           <h3>预入库</h3>
@@ -34,8 +34,8 @@
           <p>在库产品新增</p>
         </div>
       </div>
-      <div class="scanBor" v-if="isWareIn && !isBack && !proAllot"></div>
-      <div class="scanList" @click="handleWholeClick" v-if="isWareIn && !isBack && !proAllot" @click.stop="isWholeShow">
+      <div class="scanBor" v-if="isWareIn && !isBack && !proAllot&& !isVirtualFlag"></div>
+      <div class="scanList" @click="handleWholeClick" v-if="isWareIn && !isBack && !proAllot && !isVirtualFlag" @click.stop="isWholeShow">
         <span class="scanIcon"><i class="iconfont icon-orderIn" /></span>
         <div class="scanMain">
           <h3>整单入库</h3>
@@ -67,6 +67,7 @@ export default {
       proAllot: false,
       isBack: false,
       isNoShow: false, // 无码新增
+      isVirtualFlag: false
     }
   },
   created() {
@@ -123,6 +124,10 @@ export default {
         this.proAllot = true
       }
       this.isBack = this.isNoBack
+    },
+    handleIsVirtual(isVirtual) {
+      this.isVirtualFlag = isVirtual
+      this.$forceUpdate()
     }
   },
   watch: {

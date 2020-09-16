@@ -56,13 +56,50 @@
             </a-col>
           </a-row>
         </a-col>
+        <a-col :span="8" v-if="!isDistributor">
+          <a-row class="tablecell">
+            <a-col :span="6" class="leftcell">
+              <span class="mustFill" title="经销商">*</span>经销商
+            </a-col>
+            <a-col :span="18" class="rightcell">
+              <a-select style="width: 100%; max-width: 255px" placeholder="请选择经销商" v-model="titleData.distCode" @change="(value,option)=>{sellerChange(value,option)}">
+                <a-select-option v-for="seller in sellerData" :key="seller.code" :value="seller.code" :type="seller.type">{{ seller.name }}</a-select-option>
+              </a-select>
+            </a-col>
+          </a-row>
+        </a-col>
         <a-col :span="8">
           <a-row class="tablecell">
             <a-col :span="6" class="leftcell">
               <span class="mustFill">*</span>配送商
             </a-col>
             <a-col :span="18" class="rightcell">
-              <a-input placeholder="请输入配送商" :style="{ maxWidth:'255px',width:'100%' }" v-model="titleData.distribution" :disabled="true" />
+              <a-input-group compact :style="{margin:'12px 0'}">
+                <a-select style="width:90px" placeholder="已备案" v-model="titleData.authDist" @change="handleDistAuth">
+                  <a-select-option value="has">已备案</a-select-option>
+                  <a-select-option value="hasNo">未备案</a-select-option>
+                  <a-select-option value="unKnownDistribution">手动填写</a-select-option>
+                </a-select>
+                <a-select
+                  style="width: 165px;"
+                  showSearch
+                  placeholder="请选择配送商"
+                  optionFilterProp="children"
+                  @change="(value, option)=>{handleChangeAuthDist(value, option)}"
+                  v-model="titleData.authDistCode"
+                  v-show="titleData.authDist === 'has'">
+                  <a-select-option v-for="cusItem in distributorList" :key="cusItem.code" :value="cusItem.code" :title="cusItem.name">{{ cusItem.name }}</a-select-option>
+                </a-select>
+                <a-input
+                  placeholder="请选择配送商"
+                  @click="selectUnauthDist"
+                  style="width: 100%;max-width:165px;"
+                  v-model="titleData.authDistName"
+                  v-show="titleData.authDist === 'hasNo'"
+                  readonly />
+                <a-input v-show="titleData.authDist === 'unKnownDistribution'" placeholder="请输入配送商" :style="{ maxWidth:'165px',width:'100%' }" v-model="titleData.distribution" />
+              </a-input-group>
+
             </a-col>
           </a-row>
         </a-col>
@@ -80,7 +117,7 @@
                 <a-select
                   style="width: 180px;"
                   showSearch
-                  placeholder="选择客户"
+                  placeholder="请选择购货方"
                   optionFilterProp="children"
                   @change="handleChangeCus"
                   v-model="titleData.cusCode"
@@ -88,7 +125,7 @@
                   <a-select-option v-for="cusItem in cusList" :key="cusItem.code" :value="cusItem.code" :title="cusItem.name">{{ cusItem.name }}</a-select-option>
                 </a-select>
                 <a-input
-                  placeholder="请选择客户名称"
+                  placeholder="请选择购货方"
                   @click="handleSelectCus"
                   style="width: 100%;max-width:180px;"
                   v-model="titleData.cusName"
@@ -167,7 +204,6 @@
             </a-col>
             <a-col :span="18" class="rightcell">
               <a-select
-                :disabled="true"
                 :style="{ maxWidth:'255px',width:'100%' }"
                 placeholder="请选择发票状态"
                 v-model="titleData.inStatus"
@@ -213,18 +249,50 @@
             </a-col>
           </a-row>
         </a-col>
+        <a-col :span="8" v-if="!isDistributor">
+          <a-row class="tablecell">
+            <a-col :span="6" class="leftcell">
+              <span class="mustFill" title="经销商">*</span>经销商
+            </a-col>
+            <a-col :span="18" class="rightcell">
+              <a-select style="width: 100%; max-width: 255px" placeholder="请选择经销商" v-model="titleData.distCode" @change="(value,option)=>{sellerChange(value,option)}">
+                <a-select-option v-for="seller in sellerData" :key="seller.code" :value="seller.code" :type="seller.type">{{ seller.name }}</a-select-option>
+              </a-select>
+            </a-col>
+          </a-row>
+        </a-col>
         <a-col :span="8">
           <a-row class="tablecell">
             <a-col :span="6" class="leftcell">
-              <a-tooltip placement="top">
-                <template slot="title">
-                  <span>配送商名称</span>
-                </template>
-                <span class="mustFill">*</span>配送商名称
-              </a-tooltip>
+              <span class="mustFill">*</span>配送商
             </a-col>
-            <a-col :span="18" class="rightcell borderRadiusRight">
-              <a-input placeholder="配送商名称" :style="{ maxWidth:'255px',width:'100%' }" v-model="titleData.distribution" :disabled="true" />
+            <a-col :span="18" class="rightcell">
+              <a-input-group compact :style="{margin:'12px 0'}">
+                <a-select style="width:90px" placeholder="已备案" v-model="titleData.authDist" @change="handleDistAuth">
+                  <a-select-option value="has">已备案</a-select-option>
+                  <a-select-option value="hasNo">未备案</a-select-option>
+                  <a-select-option value="unKnownDistribution">手动填写</a-select-option>
+                </a-select>
+                <a-select
+                  style="width: 165px;"
+                  showSearch
+                  placeholder="请选择配送商"
+                  optionFilterProp="children"
+                  @change="(value, option)=>{handleChangeAuthDist(value, option)}"
+                  v-model="titleData.authDistCode"
+                  v-show="titleData.authDist === 'has'">
+                  <a-select-option v-for="cusItem in distributorList" :key="cusItem.code" :value="cusItem.code" :title="cusItem.name">{{ cusItem.name }}</a-select-option>
+                </a-select>
+                <a-input
+                  placeholder="请选择配送商"
+                  @click="selectUnauthDist"
+                  style="width: 100%;max-width:165px;"
+                  v-model="titleData.authDistName"
+                  v-show="titleData.authDist === 'hasNo'"
+                  readonly />
+                <a-input v-show="titleData.authDist === 'unKnownDistribution'" placeholder="请输入配送商" :style="{ maxWidth:'165px',width:'100%' }" v-model="titleData.distribution" />
+              </a-input-group>
+
             </a-col>
           </a-row>
         </a-col>
@@ -363,6 +431,8 @@
       <div class="deleteInvoice" @click="estateAdd">保存附件</div>
       <!--       选择购货方-->
       <select-cus-name v-if="selectShow" :visible="selectShow" :cusData="selectData" @selectCus="handleSelectOk" @selectCancle="handleSelectCancle"></select-cus-name>
+      <!-- 选择未备案的配送商 -->
+      <select-distributor v-if="selectUnauthDistShow" :visible="selectUnauthDistShow" @selectCus="handleSelectOk" @selectCancle="handleSelectCancle"></select-distributor>
       <!--             查看图片-->
       <a-modal :visible="imgVisible" :footer="null" @cancel="imgCancel" width="660px" class="imgModal">
         <img alt="example" style="width: 100%" :src="srcImg" />
@@ -381,37 +451,39 @@ import {
   getEstateDocNo,
   getSaleMonth
 } from '@/api/auditManage/auditManage'
+import { getCusCodeByDistCode, userDistRange } from '@/api/depot/wareHouse'// 查询已授权的配送商
 import moment from 'moment'
 import SelectCusName from '@/views/auditManage/auditWrap/modules/SelectCusName'
-import {
-  getStore
-} from '@/utils/storage'
-
+import SelectDistributor from '../../../reservoir/Depot/modules/SelectDistributor'
+import { getStore, setStore } from '@/utils/storage'
 export default {
   name: 'EstateInfo',
   components: {
-    SelectCusName
+    SelectCusName,
+    SelectDistributor
   },
   props: ['titleDetail'],
   beforeCreate() {
     this.form = this.$form.createForm(this)
+    const userDistCode = setStore('USER_DIST_CODE')
+    if (userDistCode) {
+      const index = userDistCode.indexOf('SVCT')
+      this.isDistributor = index === 0
+    }
   },
   mounted() {
     const newData = JSON.parse(JSON.stringify(this.titleDetail))
     const titleInfo = getStore('estateDetail')
     const EstateId = getStore('EstateId')
     this.titleData = newData
-    this.titleData.invoiceType = titleInfo.invoiceType
-    this.titleData.distribution = EstateId.distribution
+    // this.titleData.invoiceType = titleInfo.invoiceType
+    // this.titleData.distribution = EstateId.distribution
     this.authorize = this.titleData.hosAuthFlag === '2' ? 'hasNo' : 'has'
+    this.titleData.authDist = this.titleData.authDist ? this.titleData.authDist : 'has' // 默认配送商是已备案
     this.timeSelect = newData.inDate
       ? moment(moment(newData.inDate).format('YYYY-MM-DD'), 'YYYY-MM-DD')
       : null
-    // if (newData.type === 'add') {
-    //     this.titleData.date = undefined
-    // } else {
-    //     this.titleData.date = this.titleData.salesYear + '-' + this.titleData.salesMonth
-    // }
+
     this.titleData.date = undefined
     this.verifyCode = newData.verifyCode
     if (newData.addType && !newData.id) {
@@ -492,15 +564,10 @@ export default {
           break
       }
     }
-    this.titleData.distCode = EstateId.distCode
-    // 获取销货方
-    this.getInvoiceSeller()
-    this.getBuyerData({
-      code: EstateId.distCode,
-      type: 1
-    })
-    this.invoiceTypeChange()
-    this.getMonth()
+    // TODO   编辑
+    // this.titleData.distCode = EstateId.distCode
+
+    this.initData()
   },
   data() {
     return {
@@ -514,6 +581,9 @@ export default {
       },
       authorize: 'has',
       cusList: [],
+      distributorList: [], // 已备案配送商列表
+      selectUnauthDistShow: false,
+      isDistributor: false,
       monthList: [],
       buyerData: [],
       purList: [{
@@ -570,6 +640,23 @@ export default {
   },
   methods: {
     moment,
+    initData() {
+      if (!this.isDistributor) {
+        this.getInvoiceSeller()
+      } else {
+        this.getDistributorList(this.$store.state.user.info.distCode || '')
+        this.getBuyerData(
+          {
+            code: this.$store.state.user.info.distCode,
+            type: 1
+          }
+        )
+      }
+
+      this.invoiceTypeChange()
+      this.getMonth()
+      this.$forceUpdate()
+    },
     handleNo(e) {
       // console.info('val===', e.target.value)
       this.titleData.inNo = e.target.value
@@ -585,13 +672,6 @@ export default {
             description: res.message,
             duration: 4
           })
-        }
-      })
-    },
-    handleChangeCus(val) {
-      this.cusList.forEach(item => {
-        if (item.code === val) {
-          this.titleData.cusName = item.name
         }
       })
     },
@@ -638,6 +718,19 @@ export default {
         }
       })
     },
+    getDistributorList(distCode = '') { // 查询所有已备案的配送商
+      const params = {
+        distCode: distCode || ''
+      }
+      getCusCodeByDistCode(params).then((res) => {
+        if (res.message === 'SUCCESS') {
+          const data = res.data
+          data.map(item => { item.code = item.cusCode; item.name = item.cusName })
+          this.distributorList = data
+        }
+      })
+    },
+
     invoiceTypeChange() {
       // 发票类型切换
       if (
@@ -657,24 +750,42 @@ export default {
     getInvoiceSeller() {
       // 获取销货方数据
       invoiceSeller().then(res => {
-        this.sellerData = res.data
+        if (res.message === 'SUCCESS') {
+          this.sellerData = res.data
+          this.titleData.distCode = res.data[0].code
+          this.titleData.distName = res.data[0].name
+          this.getDistributorList(res.data[0].code || '')
+          this.getBuyerData(
+            {
+              code: res.data[0].code || '',
+              type: 1
+            }
+          )
+        }
       })
     },
 
     sellerChange(value, option) {
-      // console.info('====', option.data.attrs.type )
-      this.sellerData.forEach(item => {
-        if (item.code === value) {
-          this.titleData.distName = item.name
-        }
-      })
-      // 选择销货方
+      this.titleData.distName = option.componentOptions.propsData.title
+      //   选择销货方
       const param = {
         code: value,
         type: option.data.attrs.type
       }
-      this.titleData.cusCode = undefined
       this.getBuyerData(param)
+      this.titleData.authDistCode = undefined
+      this.titleData.authDistName = ''
+      this.titleData.cusCode = undefined
+      this.titleData.cusName = ''
+      this.titleData.authorize = 'has'
+      this.titleData.authDist = 'has'
+      this.authorize = 'has'
+      this.$forceUpdate()
+
+      const param1 = {
+        distCode: this.title.distCode
+      }
+      getDistributorList(param1)
     },
     // 选择购货方弹框
     handleSelectCus() {
@@ -694,6 +805,30 @@ export default {
       })
       this.$forceUpdate()
     },
+    // 选择未授权的配送商弹框
+    selectUnauthDist() {
+      if (this.titleData.distCode) {
+        this.selectUnauthDistShow = true
+        this.selectShow = false
+        this.selectData = {
+          distCode: this.titleData.distCode,
+          cusCode: this.titleData.cusCode,
+          cusName: this.titleData.cusName
+        }
+      } else {
+        this.$notification['error']({
+          message: '提示',
+          description: '请先选择经销商！',
+          duration: 4
+        })
+      }
+    },
+    // 选择已授权的配送商
+    handleChangeAuthDist(value, option) {
+      const seleCus = this.titleData.authDistCode
+      this.titleData.authDistName = option.componentOptions.propsData.title
+      this.$forceUpdate()
+    },
     getBuyerData(param, key) {
       // 获取购货方数据
       invoiceBuyer(param).then(res => {
@@ -711,6 +846,12 @@ export default {
         this.titleData.cusName = ''
       }
       this.authorize = e
+    },
+    handleDistAuth() {
+      this.titleData.distribution = ''
+      this.titleData.authDistCode = undefined
+      this.titleData.authDistName = ''
+      this.$forceUpdate()
     },
     uploadChangeTitle({
       file,
@@ -819,8 +960,17 @@ export default {
         this.titleData.timeSelect = this.timeSelect
         this.titleData.inDate = this.timeSelect
         this.titleData.verifyCode = this.verifyCode
-        this.titleData.authorize = this.authorize
-        this.titleData.hosAuthFlag = this.authorize === 'hasNo' ? '2' : '1'
+        this.titleData.authorize = this.authorize // 客户是否授权
+        this.titleData.hosAuthFlag = this.authorize === 'has' ? '1' : '2'
+        this.titleData.unKnownDistribution = this.titleData.authDist === 'unKnownDistribution' // 是否手动填写
+        // this.titleData.distAuthFlag = this.titleData.authDist === 'has' ? '1' : '2' // 配送商是否备案  1是备案  2是未备案   手动填写属于未备案
+        this.titleData.distributionCode = this.titleData.authDist === 'unKnownDistribution' ? '' : this.titleData.authDistCode
+        // delete this.titleData.authDist
+        // delete this.titleData.authDistCode
+        // delete this.titleData.authDistName
+        // delete this.titleData.distAuthFlag
+        this.titleData.distribution = this.titleData.authDist === 'unKnownDistribution' ? this.titleData.distribution : this.titleData.authDistName
+
         const userDistCode = getStore('USER_DIST_CODE')
         const userDistName = getStore('USER_DIST_NAME')
         this.titleData.reportOrgCode = userDistCode
@@ -891,7 +1041,7 @@ export default {
               invoice: currentData,
               picId: addType === 'wareDoc' ? this.picId : currentData.imgId
             }
-            // console.info('currentData===', currentData)
+            console.info('0911 currentData===', currentData)
             PerssionAdd(param).then(res => {
               if (res.code === 200) {
                 // console.info('res====', res)
@@ -994,12 +1144,24 @@ export default {
     // },
     handleSelectOk(subVal) {
       // console.info('subVal====', subVal)
-      this.titleData.cusCode = subVal.cusCode
-      this.titleData.cusName = subVal.cusName
-      this.selectShow = false
+      if (this.selectShow) {
+        this.titleData.cusCode = subVal.cusCode
+        this.titleData.cusName = subVal.cusName
+        this.selectShow = false
+      }
+      if (this.selectUnauthDistShow) {
+        this.titleData.authDistCode = subVal.cusCode
+        this.titleData.authDistName = subVal.cusName
+        this.selectUnauthDistShow = false
+      }
     },
     handleSelectCancle() {
-      this.selectShow = false
+      if (this.selectShow) {
+        this.selectShow = false
+      }
+      if (this.selectUnauthDistShow) {
+        this.selectUnauthDistShow = false
+      }
     },
     handleDateChange(date, string) {
       // console.info('date===', date, string)

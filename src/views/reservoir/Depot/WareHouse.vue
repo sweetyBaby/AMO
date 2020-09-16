@@ -173,7 +173,7 @@ import DhEmpty from '@/views/comPublic/DhEmpty'
 import moment from 'moment'
 import DepotEmpty from './DepotEmpty'
 import { STable } from '@/components'
-import { DataFilter, exportTable, exportTabList } from '@/utils/storage'
+import { DataFilter, exportTable, exportTabList, setStore } from '@/utils/storage'
 import AddNewWare from './modules/OldAddNewWare'
 import { getWareList, userDistRange } from '@/api/depot/wareHouse'
 import ProDetail from './ProDetail'
@@ -204,6 +204,10 @@ export default {
   },
   mounted () {
     this.loadingSpin = false
+    const currentRouteParams = this.$route.params
+    if (currentRouteParams && currentRouteParams.isFromOrderList) {
+      this.handleAdd(currentRouteParams)
+    }
   },
   computed: {
     headerUpload () {
@@ -441,11 +445,12 @@ export default {
         })
       }
     },
-    handleAdd () {
+    handleAdd (paramsFromOrder) {
       const parmas = {
         parentCom: 'WareHouse',
         proType: 'wareIn',
-        pageTitle: '新增产品入库'
+        pageTitle: '新增产品入库',
+        ...paramsFromOrder
       }
       this.$router.push({
         name: 'WareHouse_Edit',
@@ -504,6 +509,18 @@ export default {
   },
   destroyed () {
     this.loadingSpin = false
+  },
+  watch: {
+    $route (to, from) {
+      if (to.name === 'WareHouse') {
+        const currentRouteParams = this.$route.params
+        if (currentRouteParams && currentRouteParams.isFromOrderList) {
+          this.handleAdd(currentRouteParams)
+        } else {
+          this.$refs.table.refresh(true)
+        }
+      }
+    }
   }
 }
 </script>

@@ -331,7 +331,7 @@ export default {
           .card_title {
             width: auto;
             font-size: 18px;
-            padding: 0 10px 0 0;
+            padding: 0 10px 0 18px;
             float: left;
             line-height: 24px;
             font-weight: bold;

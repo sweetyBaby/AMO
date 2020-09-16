@@ -575,23 +575,23 @@ export default {
           customRender: 'qty'
         }
       },
-        //   {
-        //     title: '单价（不含税）',
-        //     key: 'nonePrice',
-        //     dataIndex: 'nonePrice',
-        //     width: '160px',
-        //     scopedSlots: {
-        //       customRender: 'nonePrice'
-        //     }
-        //   },
-        //   {
-        //     title: '总价（不含税）',
-        //     key: 'nonePriceTotal',
-        //     dataIndex: 'nonePriceTotal',
-        //     scopedSlots: {
-        //       customRender: 'nonePriceTotal'
-        //     }
-        //   }
+      {
+        title: '单价（不含税）',
+        key: 'nonePrice',
+        dataIndex: 'nonePrice',
+        width: '160px',
+        scopedSlots: {
+          customRender: 'nonePrice'
+        }
+      },
+      {
+        title: '总价（不含税）',
+        key: 'nonePriceTotal',
+        dataIndex: 'nonePriceTotal',
+        scopedSlots: {
+          customRender: 'nonePriceTotal'
+        }
+      }
         // {
         //   title: '操作',
         //   dataIndex: 'operation',

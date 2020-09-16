@@ -448,18 +448,18 @@ export default {
         // console.info('getMenuList---',res)
         if (res.message === 'SUCCESS') {
           const getMenuList = JSON.parse(JSON.stringify(res.data))
-          //   getMenuList.children.map(second => {
-          //     second.children.map(third => {
-          //       third.children.map(menus => {
-          //         // console.info('menus---',menus)
-          //         if (menus.menuUrl.indexOf('_Edit') !== -1 || menus.menuUrl.indexOf('_Detail') !== -1) {
-          //           // console.info('menus---',menus)
-          //           menus.disabled = true
-          //           menus.disableCheckbox = false
-          //         }
-          //       })
-          //     })
-          //   })
+          getMenuList.children.map(second => {
+            second.children.map(third => {
+              third.children.map(menus => {
+                // console.info('menus---',menus)
+                if (menus.menuUrl.indexOf('_Edit') !== -1 || menus.menuUrl.indexOf('_Detail') !== -1) {
+                  // console.info('menus---',menus)
+                  menus.disabled = true
+                  menus.disableCheckbox = false
+                }
+              })
+            })
+          })
           this.treeList = [{ ...getMenuList }]
           this.expandedKeys = ['0-0', '0-0-0']
           this.selectedKeys = ['0-1-0']

@@ -88,7 +88,7 @@ export default {
         this.modelList = proMol.map(item => {
           return {
             label: item,
-            value: item,
+            value: item
           }
         })
         this.checkUnable(this.checkedList)

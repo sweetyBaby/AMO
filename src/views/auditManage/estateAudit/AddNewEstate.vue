@@ -1,48 +1,56 @@
 <template>
   <div>
-    <div class="EstateTitle">
-      <div class="icons-list pageTitle-Btn">
-        <span class="titleBtn" @click="handleBack()">
-          <a-tooltip placement="top">
-            <template slot="title">
-              <span>返回</span>
-            </template>
-            <i class="iconfont icon-back" />
-          </a-tooltip>
-        </span>
+    <div class="">
+      <a-row :gutter="48">
+        <a-col :md="14">
 
-        <span class="titleBtn" @click="manualSearch" v-if="(titleData.status !== '2' && titleData.verifyStatus !== '05' && isShowAdd) || (titleData.status !== '2' && titleData.verifyStatus !== '05' && hasPermission('add'))">
-          <a-tooltip placement="top">
-            <template slot="title">
-              <span>手动选择</span>
-            </template>
-            <a-button :disabled="isEdit">
-              <i class="iconfont icon-plus" />
-            </a-button>
-          </a-tooltip>
-        </span>
-        <span class="titleBtn" v-if="(titleData.inType < 20 && titleData.status !== '2' && titleData.verifyStatus !== '05' && isShowAdd) || (titleData.status !== '2' && titleData.verifyStatus !== '05' && hasPermission('add'))">
-          <a-upload
-            action="/amo/upload/file/add"
-            :fileList="accompanyList.fileList"
-            :showUploadList="false"
-            @change="uploadChange"
-            :multiple="true"
-            :beforeUpload="beforeUploadSui"
-            :headers="headerUpload"
-            :data="accompanyList.param"
-            :disabled="isEdit">
-            <a-tooltip placement="top">
-              <template slot="title">
-                <span>随行单</span>
-              </template>
-              <a-button :disabled="isEdit">
-                <i class="iconfont icon-accompany" />
-              </a-button>
-            </a-tooltip>
-          </a-upload>
-        </span>
-      </div>
+        </a-col>
+        <a-col :md="10">
+          <div class="icons-list pageTitle-Btn">
+            <span class="titleBtn" @click="handleBack()">
+              <a-tooltip placement="top">
+                <template slot="title">
+                  <span>返回</span>
+                </template>
+                <i class="iconfont icon-back" />
+              </a-tooltip>
+            </span>
+
+            <span class="titleBtn" @click="manualSearch" v-if="titleData.status !== '2' && titleData.verifyStatus !== '05' && isShowAdd">
+              <a-tooltip placement="top">
+                <template slot="title">
+                  <span>手动选择</span>
+                </template>
+                <a-button :disabled="isEdit">
+                  <i class="iconfont icon-plus" />
+                </a-button>
+              </a-tooltip>
+            </span>
+            <span class="titleBtn" v-if="titleData.inType < 20 && titleData.status !== '2' && titleData.verifyStatus !== '05' && isShowAdd">
+              <a-upload
+                action="/amo/upload/file/add"
+                :fileList="accompanyList.fileList"
+                :showUploadList="false"
+                @change="uploadChange"
+                :multiple="true"
+                :beforeUpload="beforeUploadSui"
+                :headers="headerUpload"
+                :data="accompanyList.param"
+                :disabled="isEdit">
+                <a-tooltip placement="top">
+                  <template slot="title">
+                    <span>随行单</span>
+                  </template>
+                  <a-button :disabled="isEdit">
+                    <i class="iconfont icon-accompany" />
+                  </a-button>
+                </a-tooltip>
+              </a-upload>
+            </span>
+          </div>
+        </a-col>
+      </a-row>
+
     </div>
     <div class="EstateCon" v-if="!isAllData">
       <EstateEmpty @click="handleUpEstate" :isTitleisTitle="false" />
@@ -117,7 +125,7 @@
           @change="handleTableChange">
           <span slot="qty" slot-scope="text, record, index">
             <template>
-              <div v-if="(titleData.status !== '2' && titleData.verifyStatus !== '05'&& isShowAdd)||(titleData.status !== '2' && titleData.verifyStatus !== '05' && hasPermission('add'))" class="detailsProduct">
+              <div v-if="titleData.status !== '2' && titleData.verifyStatus !== '05'&& isShowAdd " class="detailsProduct">
                 <span v-show="tableNegative">-</span>
                 <a-input style="margin: -5px 0" v-model="record.newQty" @change="changeQty(record)" @blur="blurQty(record)" v-show="detailsDataProp.verifyStatus !== '05'"></a-input>
               </div>
@@ -129,7 +137,7 @@
           </span>
           <span slot="nonePrice" slot-scope="text, record">
             <template>
-              <div v-if="(titleData.status!=='2' && titleData.verifyStatus !== '05'&& isShowAdd) || (titleData.verifyStatus !== '05' && hasPermission('add'))">
+              <div v-if="titleData.status!=='2' && titleData.verifyStatus !== '05'&& isShowAdd ">
                 <a-input style="margin: -5px 0" v-model="record.nonePrice" @change="changeNonePrice(record)" @blur="blurNonePrice(record)"></a-input>
               </div>
               <div v-else>{{ record.nonePrice }}</div>
@@ -302,23 +310,23 @@ export default {
           customRender: 'qty'
         }
       },
-        //   {
-        //     title: '单价（不含税）',
-        //     key: 'nonePrice',
-        //     dataIndex: 'nonePrice',
-        //     width: '160px',
-        //     scopedSlots: {
-        //       customRender: 'nonePrice'
-        //     }
-        //   },
-        //   {
-        //     title: '总价（不含税）',
-        //     key: 'nonePriceTotal',
-        //     dataIndex: 'nonePriceTotal',
-        //     scopedSlots: {
-        //       customRender: 'nonePriceTotal'
-        //     }
-        //   }
+      {
+        title: '单价（不含税）',
+        key: 'nonePrice',
+        dataIndex: 'nonePrice',
+        width: '160px',
+        scopedSlots: {
+          customRender: 'nonePrice'
+        }
+      },
+      {
+        title: '总价（不含税）',
+        key: 'nonePriceTotal',
+        dataIndex: 'nonePriceTotal',
+        scopedSlots: {
+          customRender: 'nonePriceTotal'
+        }
+      }
         // {
         //   title: '操作',
         //   dataIndex: 'operation',
@@ -407,22 +415,16 @@ export default {
     this.parentStatus = InvoiceId.verifyStatus
     this.titleInfo = titleInfo
     this.addData = newData
-    const current = this.$route.path.split('/')
-    const currentRoute = current[current.length - 1]
-    this.btnPermission = BtnShow(currentRoute)
     if (this.detailsDataProp.verifyStatus !== '05' && this.hasPermission('add')) {
-      const index = this.columns.findIndex(item => item.title === '操作')
-      if (index === -1) {
-        this.columns.push({
-          title: '操作',
-          dataIndex: 'operation',
-          align: 'center',
-          width: '100px',
-          scopedSlots: {
-            customRender: 'operation'
-          }
-        })
-      }
+      this.columns.push({
+        title: '操作',
+        dataIndex: 'operation',
+        align: 'center',
+        width: '100px',
+        scopedSlots: {
+          customRender: 'operation'
+        }
+      })
     }
     this.titleData.invoiceType = titleInfo.invoiceType
     if (titleInfo.type === 'add') {
@@ -453,7 +455,9 @@ export default {
       this.isEdit = false
       this.auditType = 'detail'
     }
-
+    const current = this.$route.path.split('/')
+    const currentRoute = current[current.length - 1]
+    this.btnPermission = BtnShow(currentRoute)
     // console.info('newData----', newData)
     if (newData.inType > 19) {
       this.isShowAdd = true

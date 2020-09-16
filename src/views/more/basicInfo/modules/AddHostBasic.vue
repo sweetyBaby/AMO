@@ -337,7 +337,7 @@ export default {
     handleProvince(val) {
       // console.info('已选择', val)
     }
-  },
+  }
 }
 </script>
 <style lang="less">

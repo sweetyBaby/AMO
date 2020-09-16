@@ -58,6 +58,18 @@
         :columns="columns"
         :data="loadData"
         :rowClassName="record => record.inStatus === '1' ? '' : 'textRed'">
+        <span slot="isOnRecord" slot-scope="text, record" class="cusName-Icon">
+          <a-tooltip placement="top">
+            <template slot="title">
+              <span v-show="record.auth === true">已备案</span>
+              <span v-show="record.auth !== true">未备案</span>
+            </template>
+            <i class="iconfont icon-allauthorized" v-show="record.auth === true"/>
+            <i class="iconfont icon-unauthorized" v-show="record.auth !== true"/>
+          </a-tooltip>
+          <span class="cusNameTab" v-show="record.docType !== '11'"></span>
+          {{ text }}
+        </span>
         <span slot="inNo" slot-scope="text, record">
           <span class="auditTitle">
             <small>配</small>
@@ -83,22 +95,14 @@
             <div>
               <a-popover placement="bottomRight" v-model="record.isVoid">
                 <template slot="content">
-                  <p @click="handleDetails(text,record)" v-show="record.status !== '2' && (record.productFlag === '0')">
-                    <i class="iconfont icon-detail" />
-                    添加明细
-                  </p>
-                  <p @click="handleDetails(text,record)" v-show="record.status !== '2'&& (record.productFlag !== '0')">
-                    <i class="iconfont icon-detail" />
-                    查看详情
-                  </p>
-                  <!-- <p @click="handleDetails(text,record)" v-show="record.status !== '2'">
+                  <p @click="handleDetails(text,record)" v-show="record.status !== '2'">
                     <i class="iconfont icon-detail" />
                     {{ (record.productFlag === '0') ? '添加明细' : '查看详情' }}
-                  </p> -->
+                  </p>
                   <p v-if="record.status === '2'">
                     <i class="iconfont icon-void" />已作废
                   </p>
-                  <p v-else @click="showConfirm(text,record)" v-show="!hasPermission('viewDetail')">
+                  <p v-else @click="showConfirm(text,record)">
                     <i class="iconfont icon-void" />作废
                   </p>
                   <!--<p @click="deleteTableData(text,record)"><i class="iconfont icon-empty"/>删除</p>-->
@@ -270,7 +274,10 @@ export default {
       {
         title: '发票号码/凭证号',
         dataIndex: 'inNo',
-        width: '140px'
+        width: '200px',
+        scopedSlots: {
+          customRender: 'isOnRecord'
+        }
       },
       {
         title: '验真结果',
@@ -484,7 +491,7 @@ export default {
       const current = this.$route.path.split('/')
       const currentRoute = current[current.length - 1]
       this.btnPermission = BtnShow(currentRoute)
-      if ((this.hasPermission('viewDetail') || this.hasPermission('down') || this.hasPermission('scan') || this.hasPermission('imgAdd')) && this.columns.length < 9) {
+      if (this.hasPermission('down') || this.hasPermission('scan' || this.hasPermission('imgAdd')) && this.columns.length < 9) {
         this.columns.push({
           title: '操作',
           align: 'center',
@@ -685,17 +692,16 @@ export default {
             }
           }
           if (this.fileList.length !== 0) {
-            const ocrVerifyCode = this.imgUploadList[0].ocrVerifyCode
             const ImgData = {
               ...this.imgUploadList[0],
               imgId: this.imgUploadList[0].id,
-              inType: this.imgUploadList[0].ocrInType ? this.imgUploadList[0].ocrInType : undefined, // 发票类型
-              inCode: this.imgUploadList[0].ocrInCode, // 发票代码
+              inType: this.imgUploadList[0].ocrInType,
+              inCode: this.imgUploadList[0].ocrInCode,
               inNo: this.imgUploadList[0].ocrInNo,
               inDate: this.imgUploadList[0].ocrInDate,
               cusCode: this.imgUploadList[0].cusCode,
               noneTaxTotal: this.imgUploadList[0].ocrNonetaxtotal,
-              verifyCode: ocrVerifyCode && ocrVerifyCode.length > 5 ? ocrVerifyCode.substr(this.imgUploadList[0].ocrVerifyCode.length - 6) : '',
+              verifyCode: this.imgUploadList[0].ocrVerifyCode.substr(this.imgUploadList[0].ocrVerifyCode.length - 6),
               fileUrl: this.imgUploadList[0].inUrl,
               reportType: 2,
             }
@@ -1443,7 +1449,6 @@ export default {
         cursor: pointer;
         font-size: 18px;
         line-height: 22px;
-        float: left;
         color: #cfcfcf;
         margin: 0 4px 0 0;
         display: inline-block;

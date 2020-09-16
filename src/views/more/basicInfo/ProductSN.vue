@@ -131,7 +131,7 @@ export default {
         pageSize: 10,
         showSizeChanger: true,
         pageSizeOptions: ['10', '20', '50', '100'],
-        showTotal: total => `共有 ${total} 条数据`,
+        showTotal: total => `共有 ${total} 条数据`
       },
       loading: true,
       isShowSearch: false,

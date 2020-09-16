@@ -237,7 +237,7 @@ export default {
           key: 'hosName',
           scopedSlots: {
             customRender: 'cusName'
-          },
+          }
         },
         {
           width: 150,
@@ -252,7 +252,7 @@ export default {
           key: 'distName',
           scopedSlots: {
             customRender: 'cusName'
-          },
+          }
         },
         {
           width: 150,
@@ -280,7 +280,7 @@ export default {
           customRender: (text) => {
             return text ? moment(text).format('YYYY-MM-DD HH:mm') : null
           }
-        },
+        }
         // {
         //   width: 150,
         //   title: '备注',

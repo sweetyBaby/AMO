@@ -274,7 +274,7 @@ export default {
         value: value
       }
       if (value !== '0') {
-        if (this.selectedProduct.inStatus === '1' || this.selectedProduct.docType === '11') {
+        if (this.selectedProduct.inStatus === '1') {
           this.negative = false
         } else {
           this.negative = true

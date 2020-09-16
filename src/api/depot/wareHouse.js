@@ -1,4 +1,6 @@
-import { axios } from '@/utils/request'
+import {
+  axios
+} from '@/utils/request'
 
 const api = {
   getWareList: 'document/list', // 获取产品入库列表
@@ -48,11 +50,14 @@ const api = {
 
   unAuthHosList: 'dist/hos/unAuthHosList', // 未授权客户名称
   salesReport: 'report/sales/export', // 销量报表
-  monthList: 'report/monthlyReport/history' // 月报列表
+  monthList: 'report/monthlyReport/history', // 月报列表
+
+  getCusCodeByDistCode: 'hos/cus/getCusCodeByDistCode', // 查询已授权的配送商
+  getDistributionCusListForOptions: 'distribution/cus/getDistributionCusListForOptions', // 查询未授权的配送商
 }
 export default api
 
-export function getWareList (parameter) {
+export function getWareList(parameter) {
   return axios({
     url: api.getWareList,
     method: 'post',
@@ -60,7 +65,7 @@ export function getWareList (parameter) {
   })
 }
 
-export function addWareData (parameter) {
+export function addWareData(parameter) {
   return axios({
     url: api.addWareData,
     method: 'post',
@@ -68,14 +73,14 @@ export function addWareData (parameter) {
   })
 }
 
-export function preStorage (parameter) {
+export function preStorage(parameter) {
   return axios({
     url: api.preStorage,
     method: 'post',
     data: parameter
   })
 }
-export function preSt (parameter) {
+export function preSt(parameter) {
   return axios({
     url: api.preSt,
     method: 'post',
@@ -83,7 +88,7 @@ export function preSt (parameter) {
   })
 }
 
-export function getProductBatch (parameter) {
+export function getProductBatch(parameter) {
   return axios({
     url: api.getProductBatch,
     method: 'post',
@@ -91,7 +96,7 @@ export function getProductBatch (parameter) {
   })
 }
 
-export function getDegree (parameter) {
+export function getDegree(parameter) {
   return axios({
     url: api.getDegree,
     method: 'post',
@@ -99,7 +104,7 @@ export function getDegree (parameter) {
   })
 }
 
-export function initProductNone (parameter) {
+export function initProductNone(parameter) {
   return axios({
     url: api.initProductNone,
     method: 'post',
@@ -107,7 +112,7 @@ export function initProductNone (parameter) {
   })
 }
 
-export function scanIn (parameter) {
+export function scanIn(parameter) {
   return axios({
     url: api.scanIn,
     method: 'post',
@@ -115,7 +120,7 @@ export function scanIn (parameter) {
   })
 }
 
-export function listByDocNo (parameter) {
+export function listByDocNo(parameter) {
   return axios({
     url: api.listByDocNo,
     method: 'post',
@@ -123,7 +128,7 @@ export function listByDocNo (parameter) {
   })
 }
 
-export function proDetail (parameter) {
+export function proDetail(parameter) {
   return axios({
     url: api.proDetail,
     method: 'post',
@@ -131,7 +136,7 @@ export function proDetail (parameter) {
   })
 }
 
-export function submitProduct (parameter) {
+export function submitProduct(parameter) {
   return axios({
     url: api.submitProduct,
     method: 'post',
@@ -139,7 +144,7 @@ export function submitProduct (parameter) {
   })
 }
 
-export function rejection (parameter) {
+export function rejection(parameter) {
   return axios({
     url: api.rejection,
     method: 'post',
@@ -147,7 +152,7 @@ export function rejection (parameter) {
   })
 }
 
-export function applySave (parameter) {
+export function applySave(parameter) {
   return axios({
     url: api.applySave,
     method: 'post',
@@ -155,7 +160,7 @@ export function applySave (parameter) {
   })
 }
 
-export function draftsList (parameter) {
+export function draftsList(parameter) {
   return axios({
     url: api.draftsList,
     method: 'post',
@@ -163,7 +168,7 @@ export function draftsList (parameter) {
   })
 }
 
-export function draftsNew (parameter) {
+export function draftsNew(parameter) {
   return axios({
     url: api.draftsNew,
     method: 'post',
@@ -171,7 +176,7 @@ export function draftsNew (parameter) {
   })
 }
 
-export function draftsDelete (parameter) {
+export function draftsDelete(parameter) {
   return axios({
     url: api.draftsDelete,
     method: 'post',
@@ -179,7 +184,7 @@ export function draftsDelete (parameter) {
   })
 }
 
-export function draftsDetail (parameter) {
+export function draftsDetail(parameter) {
   return axios({
     url: api.draftsDetail,
     method: 'post',
@@ -187,7 +192,7 @@ export function draftsDetail (parameter) {
   })
 }
 
-export function importProduct (parameter) {
+export function importProduct(parameter) {
   return axios({
     url: api.importProduct,
     method: 'post',
@@ -195,7 +200,7 @@ export function importProduct (parameter) {
   })
 }
 
-export function whList (parameter) {
+export function whList(parameter) {
   return axios({
     url: api.whList,
     method: 'post',
@@ -203,7 +208,7 @@ export function whList (parameter) {
   })
 }
 
-export function hosUserList (parameter) {
+export function hosUserList(parameter) {
   return axios({
     url: api.hosUserList,
     method: 'post',
@@ -211,7 +216,7 @@ export function hosUserList (parameter) {
   })
 }
 
-export function getCuslist (parameter) {
+export function getCuslist(parameter) {
   return axios({
     url: api.getCuslist,
     method: 'post',
@@ -219,7 +224,7 @@ export function getCuslist (parameter) {
   })
 }
 
-export function getDocumentCusList (parameter) {
+export function getDocumentCusList(parameter) {
   return axios({
     url: api.getDocumentCusList,
     method: 'post',
@@ -227,7 +232,7 @@ export function getDocumentCusList (parameter) {
   })
 }
 
-export function retrvieModel (parameter) {
+export function retrvieModel(parameter) {
   return axios({
     url: api.retrvieModel,
     method: 'post',
@@ -235,7 +240,7 @@ export function retrvieModel (parameter) {
   })
 }
 
-export function getRegistration (parameter) {
+export function getRegistration(parameter) {
   return axios({
     url: api.getRegistration,
     method: 'post',
@@ -243,7 +248,7 @@ export function getRegistration (parameter) {
   })
 }
 
-export function getFromProIn (parameter) {
+export function getFromProIn(parameter) {
   return axios({
     url: api.getFromProIn,
     method: 'post',
@@ -251,7 +256,7 @@ export function getFromProIn (parameter) {
   })
 }
 
-export function scanOut (parameter) {
+export function scanOut(parameter) {
   return axios({
     url: api.scanOut,
     method: 'post',
@@ -259,7 +264,7 @@ export function scanOut (parameter) {
   })
 }
 
-export function getDocumentWhList (parameter) {
+export function getDocumentWhList(parameter) {
   return axios({
     url: api.getDocumentWhList,
     method: 'post',
@@ -267,7 +272,7 @@ export function getDocumentWhList (parameter) {
   })
 }
 
-export function proAllotList (parameter) {
+export function proAllotList(parameter) {
   return axios({
     url: api.proAllotList,
     method: 'post',
@@ -275,7 +280,7 @@ export function proAllotList (parameter) {
   })
 }
 
-export function proAllotDetail (parameter) {
+export function proAllotDetail(parameter) {
   return axios({
     url: api.proAllotDetail,
     method: 'post',
@@ -283,7 +288,7 @@ export function proAllotDetail (parameter) {
   })
 }
 
-export function userDistRange (parameter) {
+export function userDistRange(parameter) {
   return axios({
     url: api.userDistRange,
     method: 'post',
@@ -291,7 +296,7 @@ export function userDistRange (parameter) {
   })
 }
 
-export function fetchIndexInfos (parameter) {
+export function fetchIndexInfos(parameter) {
   return axios({
     url: api.fetchIndexInfos,
     method: 'post',
@@ -299,7 +304,7 @@ export function fetchIndexInfos (parameter) {
   })
 }
 
-export function fetchIndexByCondition (parameter) {
+export function fetchIndexByCondition(parameter) {
   return axios({
     url: api.fetchIndexByCondition,
     method: 'post',
@@ -307,7 +312,7 @@ export function fetchIndexByCondition (parameter) {
   })
 }
 
-export function getAutoJson (parameter) {
+export function getAutoJson(parameter) {
   return axios({
     url: api.getAutoJson,
     method: 'post',
@@ -315,7 +320,7 @@ export function getAutoJson (parameter) {
   })
 }
 
-export function getSuccessAutoJson (parameter) {
+export function getSuccessAutoJson(parameter) {
   return axios({
     url: api.getSuccessAutoJson,
     method: 'post',
@@ -323,7 +328,7 @@ export function getSuccessAutoJson (parameter) {
   })
 }
 
-export function getDocumentDistList (parameter) {
+export function getDocumentDistList(parameter) {
   return axios({
     url: api.getDocumentDistList,
     method: 'post',
@@ -331,7 +336,7 @@ export function getDocumentDistList (parameter) {
   })
 }
 
-export function verifyApply (parameter) {
+export function verifyApply(parameter) {
   return axios({
     url: api.verifyApply,
     method: 'post',
@@ -339,7 +344,7 @@ export function verifyApply (parameter) {
   })
 }
 
-export function getDocumentErrorList (parameter) {
+export function getDocumentErrorList(parameter) {
   return axios({
     url: api.getDocumentErrorList,
     method: 'post',
@@ -347,7 +352,7 @@ export function getDocumentErrorList (parameter) {
   })
 }
 
-export function getInOutDetailByDocNo (parameter) {
+export function getInOutDetailByDocNo(parameter) {
   return axios({
     url: api.getInOutDetailByDocNo,
     method: 'post',
@@ -355,7 +360,7 @@ export function getInOutDetailByDocNo (parameter) {
   })
 }
 
-export function findJsList (parameter) {
+export function findJsList(parameter) {
   return axios({
     url: api.findJsList,
     method: 'post',
@@ -363,7 +368,7 @@ export function findJsList (parameter) {
   })
 }
 
-export function getFrom (parameter) {
+export function getFrom(parameter) {
   return axios({
     url: api.getFrom,
     method: 'post',
@@ -371,7 +376,7 @@ export function getFrom (parameter) {
   })
 }
 
-export function unAuthHosList (parameter) {
+export function unAuthHosList(parameter) {
   return axios({
     url: api.unAuthHosList,
     method: 'post',
@@ -379,7 +384,7 @@ export function unAuthHosList (parameter) {
   })
 }
 
-export function setZero (parameter) {
+export function setZero(parameter) {
   return axios({
     url: api.setZero,
     method: 'post',
@@ -387,7 +392,7 @@ export function setZero (parameter) {
   })
 }
 
-export function zeroList (parameter) {
+export function zeroList(parameter) {
   return axios({
     url: api.zeroList,
     method: 'post',
@@ -395,7 +400,7 @@ export function zeroList (parameter) {
   })
 }
 
-export function salesReport (parameter) {
+export function salesReport(parameter) {
   return axios({
     url: api.salesReport,
     method: 'post',
@@ -403,9 +408,23 @@ export function salesReport (parameter) {
   })
 }
 
-export function monthList (parameter) {
+export function monthList(parameter) {
   return axios({
     url: api.monthList,
+    method: 'post',
+    data: parameter
+  })
+}
+export function getCusCodeByDistCode(parameter) {
+  return axios({
+    url: api.getCusCodeByDistCode,
+    method: 'post',
+    data: parameter
+  })
+}
+export function getDistributionCusListForOptions(parameter) {
+  return axios({
+    url: api.getDistributionCusListForOptions,
     method: 'post',
     data: parameter
   })

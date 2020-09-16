@@ -9,9 +9,17 @@ const api = {
   OrderCancle: 'order/cancelOrder', // 取消订单
   OrderConfirm: 'order/confirmOrder', // 确认收货
   getSnList: 'order/deliveryOrderDetail', // 获取发货sn
+  distOrderSns: 'order/distOrderSns', // 获取订单对应的产品信息
 }
 export default api
 
+export function distOrderSns (parameter) {
+  return axios({
+    url: api.distOrderSns,
+    method: 'post',
+    data: parameter
+  })
+}
 export function getSnList (parameter) {
   return axios({
     url: api.getSnList,

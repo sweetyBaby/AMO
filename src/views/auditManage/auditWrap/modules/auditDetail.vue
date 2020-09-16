@@ -57,14 +57,14 @@
                 </a-tooltip>
               </a-upload>
             </span>
-            <!-- <span class="titleBtn" @click="handleSave()" v-if="titleData.status !== '2' && titleData.verifyStatus !== '05' && hasPermission('add') ">
+            <span class="titleBtn" @click="handleSave()" v-if="titleData.status !== '2' && titleData.verifyStatus !== '05' && hasPermission('add') ">
               <a-tooltip placement="top">
                 <template slot="title">
                   <span>保存</span>
                 </template>
                 <i class="iconfont icon-save" />
               </a-tooltip>
-            </span> -->
+            </span>
           </div>
         </a-col>
       </a-row>
@@ -382,23 +382,23 @@ export default {
           customRender: 'qty'
         }
       },
-        //   {
-        //     title: '单价（不含税）',
-        //     key: 'nonePrice',
-        //     dataIndex: 'nonePrice',
-        //     width: '200px',
-        //     scopedSlots: {
-        //       customRender: 'nonePrice'
-        //     }
-        //   },
-        //   {
-        //     title: '总价（不含税）',
-        //     key: 'nonePriceTotal',
-        //     dataIndex: 'nonePriceTotal',
-        //     scopedSlots: {
-        //       customRender: 'nonePriceTotal'
-        //     }
-        //   }
+      {
+        title: '单价（不含税）',
+        key: 'nonePrice',
+        dataIndex: 'nonePrice',
+        width: '200px',
+        scopedSlots: {
+          customRender: 'nonePrice'
+        }
+      },
+      {
+        title: '总价（不含税）',
+        key: 'nonePriceTotal',
+        dataIndex: 'nonePriceTotal',
+        scopedSlots: {
+          customRender: 'nonePriceTotal'
+        }
+      }
         // {
         //   title: '操作',
         //   dataIndex: 'operation',
@@ -1067,7 +1067,7 @@ export default {
         }
       }
       const estateInfo = getStore('EstateInfo')
-      if (this.detailsDataProp.distribution) {
+      if (this.detailsDataProp.distribution || this.detailsDataProp.distCode) {
         param.invoice.id = this.detailsDataProp.InvoiceId
       } else {
         param.invoice.id = this.detailsDataProp.id

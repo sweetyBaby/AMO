@@ -90,7 +90,8 @@ module.exports = {
     // development server port 8000
     // host: '192.168.100.95',
     host: 'localhost',
-    port: 8020,
+    // port: 8020,
+    port: 8009,
     open: true,
     proxy: {
       '/amo': {
@@ -99,7 +100,9 @@ module.exports = {
         // target: 'http://192.168.100.85:2010/amo',
         // target: ' http://192.168.100.126:1003/amo',
         // target: ' http://120.55.164.217/amo',
-        target: 'http://222.191.229.126:28080/amo',
+        // target: 'http://192.168.100.200:2012/amo',
+        // target: 'http://222.191.229.126:28080/amo', //  126测试
+        target: 'http://192.168.100.126:2020/amo', //  dev测试
         // target:'http://39.104.130.50/amo',
         ws: false,
         changeOrigin: true,
@@ -108,7 +111,8 @@ module.exports = {
       '/auth': {
         // target: ' http://192.168.100.126:1003/',
         // target: 'http://120.55.164.217',
-        target: 'http://222.191.229.126:1003',
+        // target: 'http://192.168.100.200:1003',
+        target: 'http://222.191.229.126:1003', // 126 测试
         // target:'http://39.104.130.50',
         ws: false,
         changeOrigin: true,

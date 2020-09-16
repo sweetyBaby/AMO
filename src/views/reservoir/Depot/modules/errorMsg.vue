@@ -22,107 +22,163 @@
     <div>
       <s-table
         :columns="columns"
-        :data="loadData"
+        :data="Newstatus==='success'?susseLoadData :loadData"
         rowKey="key"
         ref="table"
         size="default"
-        :locale="{emptyText:emptyText}"></s-table>
+        :locale="{emptyText:emptyText}"
+      >
+        <span slot="status" slot-scope="data, record">
+          <span v-if="Newstatus === 'success'">
+            <a @click="errorTip(record)">{{data}}</a>
+          </span>
+          <span v-else>{{data}}</span>
+        </span>
+      </s-table>
     </div>
   </a-card>
 </template>
 
 <script>
-import DhEmpty from '@/views/comPublic/DhEmpty'
-import { STable } from '@/components'
-import { DataFilter, saveParamsFromStore, getParamsFromStore } from '@/utils/storage'
-import { ErrorMsg } from '@/api/depot/depot'
+import DhEmpty from "@/views/comPublic/DhEmpty";
+import { STable } from "@/components";
+import {
+  DataFilter,
+  saveParamsFromStore,
+  getParamsFromStore,
+  getStore
+} from "@/utils/storage";
+import { ErrorMsg, susseMsg } from "@/api/depot/depot";
 
-const columns = [
+const columns2 = [
   {
-    title: '文件编号',
-    key: 'reportHisId',
-    dataIndex: 'reportHisId',
-    width: '20%'
+    title: "文件编号",
+    key: "reportHisId",
+    dataIndex: "reportHisId",
+    width: "20%"
   },
   {
-    title: '错误描述',
-    key: 'errorDesc',
-    dataIndex: 'errorDesc',
-    width: '60%'
+    title: "描述",
+    key: "errorDesc",
+    dataIndex: "errorDesc",
+    width: "60%",
+    scopedSlots: { customRender: "status" }
   },
   {
-    title: '错误所在行',
-    key: 'errorIndex',
-    dataIndex: 'errorIndex',
+    title: "错误所在行",
+    key: "errorIndex",
+    dataIndex: "errorIndex"
   }
-]
+];
 
+const columns1 = [
+  {
+    title: "文件编号",
+    key: "reportHisId",
+    dataIndex: "reportHisId",
+    width: "20%"
+  },
+  {
+    title: "单号",
+    key: "docNo",
+    dataIndex: "docNo",
+    width: "60%",
+    scopedSlots: { customRender: "status" }
+  },
+  {
+    title: "处理结果",
+    key: "result",
+    dataIndex: "result"
+  }
+];
 export default {
-  name: 'ErrorMsg',
+  name: "errorMsg",
   components: {
     STable,
     DhEmpty
   },
-  props: ['errorData'],
+  props: ["errorData"],
   data() {
     return {
       showTool: false,
-      emptyText: <dh-empty/>,
+      emptyText: <dh-empty />,
       queryParam: {},
       params: {},
-      pageTitle: '',
-      parentCom: '',
-      columns,
+      pageTitle: "",
+      parentCom: "",
+      columns: [],
+      Newstatus: null,
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         return ErrorMsg(Object.assign(this.queryParam, parameter)).then(res => {
-          const ErrorMsgList = DataFilter(res, 'error')
-          return ErrorMsgList
-        })
+          const ErrorMsgList = DataFilter(res, "error");
+          return ErrorMsgList;
+        });
+      },
+      susseLoadData: parameter => {
+        return susseMsg(Object.assign(this.queryParam, parameter)).then(res => {
+          const ErrorMsgList = DataFilter(res, "error");
+          return ErrorMsgList;
+        });
       }
-    }
+    };
   },
   created() {
-    this.getFirst()
+    this.getFirst();
   },
   methods: {
     handleBack() {
       this.$router.push({
         name: this.parentCom,
         params: this.params
-      })
-      this.showTool = false
+      });
+      this.showTool = false;
     },
+
+    errorTip(val) {
+      let pathTo = "Delivery_Detail";
+      let params = val.documentProductList;
+      this.$router.push({
+        name: pathTo,
+        params: {
+          proInfo:{
+             ...params,
+          },
+         pageTitle:'文件详情',
+          ...this.queryParam,
+        }
+      });
+      val.isTootip = false;
+      // console.info('val---',val)
+    },
+
     getFirst() {
-      // const getParams = this.$route.params
-      let getParams
-      if (this.$route.params.pageTitle) {
-        getParams = this.$route.params
-        saveParamsFromStore(getParams, 'ERRORDETAIL')
-        this.getParamsRed = getParams
+      const getParams = getStore("ERRORDETAIL");
+
+      this.pageTitle = getParams.pageTitle;
+      this.Newstatus = getParams.newStatus;
+
+      if (this.Newstatus === "success") {
+        this.columns = columns1;
       } else {
-        getParams = getParamsFromStore('ERRORDETAIL')
-        // console.info( getParamsFromStore('ERRORDETAIL'))
-        this.getParamsRed = getParamsFromStore('ERRORDETAIL')
+        this.columns = columns2;
       }
-      console.info('getParams====', getParams)
-      this.pageTitle = getParams.pageTitle
-      this.queryParam.reportHisId = getParams.id
-      this.parentCom = getParams.parentCom
+      this.queryParam.reportHisId = getParams.id;
+      this.parentCom = getParams.parentCom;
       this.params = {
         ...getParams
-      }
+      };
     }
   },
   watch: {
     $route(to, from) {
-      if (to.name.indexOf('_Detail') !== -1) {
-        this.$refs.table.refresh(false)
-        this.getFirst()
+      if (to.name.indexOf("_Detail") !== -1) {
+        this.$refs.table.refresh(false);
+        this.getFirst();
       }
     }
   }
-}
+};
 </script>
 
 <style>
